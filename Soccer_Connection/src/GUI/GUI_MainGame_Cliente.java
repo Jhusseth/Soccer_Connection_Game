@@ -3,6 +3,9 @@ package GUI;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+
+import controller.ControllerGame;
+
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
@@ -19,7 +22,7 @@ public class GUI_MainGame_Cliente extends JFrame {
 		
 	this.setSize(717,550);
 	this.setTitle("                                                               <<<<<< SOCCER FULL HD 4k GAME >>>>>>>");
-	this.op = new Options_Panel(this);
+	this.op = new Options_Panel();
 	this.setLayout(new BorderLayout());
 	this.init();
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);

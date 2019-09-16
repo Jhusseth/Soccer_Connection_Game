@@ -1,7 +1,9 @@
 package GUI;
 
 import javax.swing.JPanel;
-import java.awt.GridBagLayout;
+
+import controller.ControllerOptions;
+
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
@@ -15,11 +17,13 @@ public class Options_Panel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private GUI_MainGame_Cliente main;
+	
+	private ControllerOptions controller;
 
-	public Options_Panel(GUI_MainGame_Cliente main){
+	public Options_Panel(){
 		setLayout(new BorderLayout(0, 0));
-		this.main = main;
 		
+		controller = new ControllerOptions();
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(2,2));
