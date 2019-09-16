@@ -1,4 +1,4 @@
-package model;
+package modelClient;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -6,9 +6,9 @@ import java.io.IOException;
 import java.net.MulticastSocket;
 import java.net.Socket;
 
-import threads.MulticastThread;
+import threadsClient.MulticastThreadServer;
 
-public class Cliente {
+public class Client {
 	
 	public static final int PORT_TCP = 5650;
 	public static final String IP = "localhost";
@@ -20,7 +20,7 @@ public class Cliente {
 	private MulticastSocket dtSocket;
 	public static final String DIRECCION_MULTICAST = "229.5.6.7";
 	
-	public Cliente(){
+	public Client(){
 		
 		this.players = new Player[2];
 		this.name = "";
@@ -90,7 +90,7 @@ public class Cliente {
 			waitplay = true;
 		}
 		
-		MulticastThread thread = new MulticastThread(this);
+		MulticastThreadServer thread = new MulticastThreadServer(this);
 		thread.start();
 	}
 	

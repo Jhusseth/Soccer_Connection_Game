@@ -1,4 +1,4 @@
-package model;
+package modelClient;
 
 public class Game {
 

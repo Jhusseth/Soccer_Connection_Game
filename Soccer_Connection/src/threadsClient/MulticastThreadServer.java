@@ -1,14 +1,14 @@
-package threads;
+package threadsClient;
 
 import java.io.DataInputStream;
 
-import model.Cliente;
+import modelClient.Client;
 
-public class MulticastThread extends Thread{
+public class MulticastThreadServer extends Thread{
 	
-	private Cliente cliente ;
+	private Client cliente ;
 
-	public MulticastThread(Cliente cliente) {
+	public MulticastThreadServer(Client cliente) {
 		this.cliente = cliente;
 	}
 	

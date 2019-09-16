@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
-public class MainGame extends JFrame {
+public class GUI_MainGame_Cliente extends JFrame {
 	
 	/**
 	 * 
@@ -14,7 +14,7 @@ public class MainGame extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 
-	public MainGame() {
+	public GUI_MainGame_Cliente() {
 		
 	this.setSize(700,500);
 	this.setLayout(new BorderLayout());
@@ -36,7 +36,7 @@ public class MainGame extends JFrame {
 	
 	public static void main(String[] args){
 		
-		MainGame window = new MainGame();
+		GUI_MainGame_Cliente window = new GUI_MainGame_Cliente();
 		window.setVisible(true);
 		
 	}
