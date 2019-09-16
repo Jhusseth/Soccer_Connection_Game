@@ -25,6 +25,7 @@ private Player player ;
 		while(!goalsComplete && player.isPlaying() && !player.isWinner()) {
 			int posX = player.getPosX() + 5;
 			int posY = player.getPosX() + 5;
+			
 //			if (posX >= player. && !carrera.isHayGanaador()) {
 //				caballo.setGanador(true);
 //				caballo.setCorriendo(false);
