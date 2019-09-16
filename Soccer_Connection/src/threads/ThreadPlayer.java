@@ -1,5 +1,5 @@
 package threads;
 
-public class ThreadPlayer {
+public class ThreadPlayer extends Thread {
 
 }
