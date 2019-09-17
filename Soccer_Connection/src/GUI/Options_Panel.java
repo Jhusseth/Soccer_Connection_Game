@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
+import java.awt.Color;
 
 public class Options_Panel extends JPanel implements ActionListener {
 	
@@ -36,24 +37,25 @@ public class Options_Panel extends JPanel implements ActionListener {
 		setController(new ControllerOptions());
 		
 		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout());
+		panel.setBackground(Color.WHITE);
+		panel.setLayout(new GridLayout(1,6,5,0));
 		add(panel, BorderLayout.CENTER);
 		
-		JButton btnClose = new JButton("Reboot");
-		panel.add(btnClose);
+		panel.add(new JLabel(" "));
 		
-		JButton btnReboot = new JButton("Change Player");
+		JButton btnReboot = new JButton("Reboot");
 		panel.add(btnReboot);
 		
-		JButton btnChangePlayer = new JButton("Score");
+		JButton btnChangePlayer = new JButton("Change Player");
 		panel.add(btnChangePlayer);
 		
-		JButton btnScore = new JButton("Exit");
-		btnScore.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		JButton btnClose = new JButton("Close");
+		panel.add(btnClose);
+		
+		JButton btnScore = new JButton("Score");
 		panel.add(btnScore);
+		
+		panel.add(new JLabel(" "));
 		
 		btnChangePlayer.addActionListener(this);
 		btnClose.addActionListener(this);
