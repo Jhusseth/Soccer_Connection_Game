@@ -7,14 +7,14 @@ public class ThreadPlayer extends Thread {
 	
 private Player player ;
 	
-	private Game match;
+//	private Game match;
 	
 	private boolean goalsComplete;
 
 	public ThreadPlayer(Player player, Game match) {
 		super();
 		this.player = player;
-		this.match = match;
+//		this.match = match;
 		this.goalsComplete = false;
 	}
 	
@@ -23,9 +23,9 @@ private Player player ;
 	public void  run() {
 		
 		while(!goalsComplete && player.isPlaying() && !player.isWinner()) {
-			int posX = player.getPosX() + 5;
-			int posY = player.getPosX() + 5;
-			
+//			int posX = player.getPosX() + 5;
+//			int posY = player.getPosX() + 5;
+//			
 //			if (posX >= player. && !carrera.isHayGanaador()) {
 //				caballo.setGanador(true);
 //				caballo.setCorriendo(false);

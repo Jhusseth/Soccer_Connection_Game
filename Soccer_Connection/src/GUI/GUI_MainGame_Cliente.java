@@ -3,9 +3,6 @@ package GUI;
 import javax.swing.JFrame;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-
-import controller.ControllerGame;
-
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 

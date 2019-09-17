@@ -16,14 +16,12 @@ public class Options_Panel extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private GUI_MainGame_Cliente main;
-	
 	private ControllerOptions controller;
 
 	public Options_Panel(){
 		setLayout(new BorderLayout(0, 0));
 		
-		controller = new ControllerOptions();
+		setController(new ControllerOptions());
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(2,2));
@@ -41,6 +39,14 @@ public class Options_Panel extends JPanel {
 		JButton btnScore = new JButton("New button");
 		panel.add(btnScore);
 		
+	}
+
+	public ControllerOptions getController() {
+		return controller;
+	}
+
+	public void setController(ControllerOptions controller) {
+		this.controller = controller;
 	}
 
 }
