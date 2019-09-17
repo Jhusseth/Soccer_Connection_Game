@@ -11,7 +11,7 @@ public class Ball {
 	
 	public ImageIcon img;
 	public boolean stopped;
-	public boolean isWithPlayer;
+//	public boolean isWithPlayer;
 	public int addres;
 	
 	public boolean moving;
@@ -21,7 +21,7 @@ public class Ball {
 	public Ball(){
 		img = new ImageIcon("adress");
 		this.stopped = true;
-		this.isWithPlayer = false;
+//		this.isWithPlayer = false;
 		this.addres =0;
 		this.moving = false;
 	}
@@ -40,15 +40,15 @@ public class Ball {
 
 
 
-	public boolean isWithPlayer() {
-		return isWithPlayer;
-	}
+//	public boolean isWithPlayer() {
+//		return isWithPlayer;
+//	}
 
 
 
-	public void setWithPlayer(boolean isWithPlayer) {
-		this.isWithPlayer = isWithPlayer;
-	}
+//	public void setWithPlayer(boolean isWithPlayer) {
+//		this.isWithPlayer = isWithPlayer;
+//	}
 
 
 
@@ -57,28 +57,19 @@ public class Ball {
 	}
 
 
-
 	public void setAddres(int addres) {
 		this.addres = addres;
 	}
-
-
 
 	public boolean isMoving() {
 		return moving;
 	}
 
-
-
 	public void setMoving(boolean moving) {
 		this.moving = moving;
-	}
-	
-	
+	}	
 	
 	public void move(){
 		
 	}
-	
-
 }

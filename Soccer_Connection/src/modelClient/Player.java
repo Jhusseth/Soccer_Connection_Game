@@ -15,6 +15,7 @@ public class Player {
 	private int posX ;
 	private int posY ;
 	private boolean isWinner ;
+	private boolean hBall;
 	
 	public int addres;
 	
@@ -27,8 +28,30 @@ public class Player {
 		this.name =  name;
 		this.isWinner = false;
 		this.addres = 0;
+		this.hBall = false;
 		
 	}
+
+	
+	public boolean ishBall() {
+		return hBall;
+	}
+
+
+	public void sethBall(boolean hBall) {
+		this.hBall = hBall;
+	}
+
+
+	public int getAddres() {
+		return addres;
+	}
+
+
+	public void setAddres(int addres) {
+		this.addres = addres;
+	}
+
 
 	public int getIdPlayer() {
 		return idPlayer;
