@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 
-public class GUI_MainGame_Cliente extends JFrame {
+public class GUI_MainGame extends JFrame {
 	
 	/**
 	 * 
@@ -15,7 +15,7 @@ public class GUI_MainGame_Cliente extends JFrame {
 	
 	private Options_Panel op;
 
-	public GUI_MainGame_Cliente() {
+	public GUI_MainGame() {
 		
 	this.setSize(717,550);
 	this.setTitle("                                                               <<<<<< SOCCER FULL HD 4k GAME >>>>>>>");
@@ -43,7 +43,7 @@ public class GUI_MainGame_Cliente extends JFrame {
 	
 	public static void main(String[] args){
 		
-		GUI_MainGame_Cliente window = new GUI_MainGame_Cliente();
+		GUI_MainGame window = new GUI_MainGame();
 		window.setVisible(true);
 		
 	}

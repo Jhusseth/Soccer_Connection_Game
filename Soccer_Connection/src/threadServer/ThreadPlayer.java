@@ -19,7 +19,6 @@ private Player player ;
 	}
 	
 	
-
 	public void  run() {
 		
 		while(!goalsComplete && player.isPlaying() && !player.isWinner()) {

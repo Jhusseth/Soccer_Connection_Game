@@ -7,6 +7,8 @@ import controller.ControllerOptions;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Options_Panel extends JPanel {
 	
@@ -27,16 +29,20 @@ public class Options_Panel extends JPanel {
 		panel.setLayout(new GridLayout(2,2));
 		add(panel, BorderLayout.CENTER);
 		
-		JButton btnClose = new JButton("New button");
+		JButton btnClose = new JButton("Reboot");
 		panel.add(btnClose);
 		
-		JButton btnReboot = new JButton("New button");
+		JButton btnReboot = new JButton("Change Player");
 		panel.add(btnReboot);
 		
-		JButton btnChangePlayer = new JButton("New button");
+		JButton btnChangePlayer = new JButton("Score");
 		panel.add(btnChangePlayer);
 		
-		JButton btnScore = new JButton("New button");
+		JButton btnScore = new JButton("Exit");
+		btnScore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		panel.add(btnScore);
 		
 	}
