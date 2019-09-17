@@ -4,7 +4,11 @@ import javax.swing.ImageIcon;
 
 public class Player {
 	
-	//Atributtes
+	public static final int UP = 1;
+	public static final int DOWN = 2;
+	public static final int RIGHT = 0;
+	public static final int LEFT = 3;
+	
 	private int idPlayer;
 	private String name;
 	private ImageIcon avatar;
@@ -12,14 +16,17 @@ public class Player {
 	private int posY ;
 	private boolean isWinner ;
 	
+	public int addres;
+	
 
-	public Player(int posX, int posY, String name, ImageIcon avatar){
+	public Player(int posX, int posY, String name){
 		
 		this.posX = posX;
 		this.posY = posY;
-		this.avatar = avatar;
+		this.avatar = new ImageIcon("adress");
 		this.name =  name;
 		this.isWinner = false;
+		this.addres = 0;
 		
 	}
 
@@ -69,6 +76,10 @@ public class Player {
 
 	public void setWinner(boolean isWinner) {
 		this.isWinner = isWinner;
+	}
+	
+	public void move(){
+		
 	}
 
 	@Override
