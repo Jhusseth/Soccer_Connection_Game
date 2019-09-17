@@ -17,8 +17,8 @@ public class GUI_MainGame extends JFrame {
 
 	public GUI_MainGame() {
 		
-	this.setSize(717,550);
-	this.setTitle("                                                               <<<<<< SOCCER FULL HD 4k GAME >>>>>>>");
+	this.setSize(860,530);
+	this.setTitle("SFCB                                                                                  <<<<<< SOCCER FULL HD 4k GAME >>>>>>>");
 	this.op = new Options_Panel();
 	this.setLayout(new BorderLayout());
 	this.init();
