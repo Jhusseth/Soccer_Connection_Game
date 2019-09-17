@@ -19,6 +19,7 @@ public class Options_Panel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private ControllerOptions controller;
+	public static final String CLOSE = "close";
 
 	public Options_Panel(){
 		setLayout(new BorderLayout(0, 0));
