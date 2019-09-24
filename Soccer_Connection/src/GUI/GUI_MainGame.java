@@ -38,7 +38,7 @@ public class GUI_MainGame extends JFrame {
 		panel.setBackground(SystemColor.window);
 		panel.setLayout(new BorderLayout());
 		JLabel lblNewLabel = new JLabel(new ImageIcon("data/Field.png"));
-		panel.add(lblNewLabel, BorderLayout.CENTER);
+		panel.add(lblNewLabel, BorderLayout.WEST);
 		
 		getContentPane().add(panel, BorderLayout.CENTER);
 		getContentPane().add(op, BorderLayout.SOUTH);

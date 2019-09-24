@@ -1,6 +1,8 @@
 package modelClient;
 
+
 import javax.swing.ImageIcon;
+
 
 public class Ball {
 	
@@ -10,28 +12,49 @@ public class Ball {
 	public static final int LEFT = 3;
 	
 	public ImageIcon img;
-	public boolean stopped;
+	private boolean stopped;
 //	public boolean isWithPlayer;
-	public int addres;
+	private int addres;
 	
-	public boolean moving;
+	private int posX;
+	private int posY;
 	
 	
-	
-	public Ball(){
+	public Ball(int direccion){
 		img = new ImageIcon("adress");
 		this.stopped = true;
 //		this.isWithPlayer = false;
-		this.addres =0;
-		this.moving = false;
-	}
+		this.addres = direccion;
+		this.posX=0;
+		this.posY=0;
 
+	}
 
 
 	public boolean isStopped() {
 		return stopped;
 	}
 
+
+
+	public int getPosX() {
+		return posX;
+	}
+
+
+	public void setPosX(int posX) {
+		this.posX = posX;
+	}
+
+
+	public int getPosY() {
+		return posY;
+	}
+
+
+	public void setPosY(int posY) {
+		this.posY = posY;
+	}
 
 
 	public void setStopped(boolean stopped) {
@@ -59,17 +82,44 @@ public class Ball {
 
 	public void setAddres(int addres) {
 		this.addres = addres;
-	}
-
-	public boolean isMoving() {
-		return moving;
-	}
-
-	public void setMoving(boolean moving) {
-		this.moving = moving;
 	}	
 	
-	public void move(){
+	public void move(int width, int heigh){
+		switch (addres) {
+		case UP:
+			posY++;
+			break;
+			
+		case DOWN:
+			posY--;
+			break;
+			
+		case LEFT:
+			posX--;
+			break;
+			
+		case RIGHT:
+			posX++;
+			break;
+
+		default:
+			break;
+		}
 		
+		if(posX>=width){
+			addres=LEFT;
+		}
+		
+		if(posX<=width){
+			addres=RIGHT;
+		}
+
+		if(posY>=heigh){
+			addres=UP;
+		}
+		
+		if(posY<=heigh){
+			addres=DOWN;
+		}
 	}
 }

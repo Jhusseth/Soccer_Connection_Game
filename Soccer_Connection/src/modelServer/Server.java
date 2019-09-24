@@ -11,7 +11,6 @@ public class Server {
 	private Game game;
 	private ServerSocket dSock;
 	public static final int PORT_TCP = 5650;
-	public static final int PORT_AUDIO = 9786;
 	private ArrayList<Socket> socketsActives;
 	public static final String DIRECCION_MULTICAST = "229.5.6.7";
 	public ArrayList<String> clientsToPersist;

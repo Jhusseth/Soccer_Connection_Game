@@ -19,6 +19,18 @@ public class Player {
 	
 	public int addres;
 	
+	private Ball ball;
+	
+
+	public Ball getBall() {
+		return ball;
+	}
+
+
+	public void setBall(Ball ball) {
+		this.ball = ball;
+	}
+
 
 	public Player(int posX, int posY, String name){
 		
@@ -101,7 +113,72 @@ public class Player {
 		this.isWinner = isWinner;
 	}
 	
-	public void move(){
+	public void move(int width, int heigh){
+		switch (addres) {
+		case UP:
+			posY++;
+			break;
+			
+		case DOWN:
+			posY--;
+			break;
+			
+		case LEFT:
+			posX--;
+			break;
+			
+		case RIGHT:
+			posX++;
+			break;
+
+		default:
+			break;
+		}
+		
+		if(posX>=width){
+			addres=LEFT;
+		}
+		
+		if(posX<=width){
+			addres=RIGHT;
+		}
+
+		if(posY>=heigh){
+			addres=UP;
+		}
+		
+		if(posY<=heigh){
+			addres=DOWN;
+		}
+	}
+	
+	private void manageBall(){
+		
+		if(this.hBall){
+			
+			switch (ball.getAddres()) {
+			case UP:
+				ball.setPosY(posY+5);
+				
+				break;				
+			case DOWN:
+				ball.setPosY(posY-5);
+				break;
+				
+			case LEFT:
+				ball.setPosX(posX-5);
+				break;
+				
+			case RIGHT:
+				ball.setPosX(posX+5);
+				break; 
+				
+			default:
+				break;
+			}
+		}
+		
+		
 		
 	}
 

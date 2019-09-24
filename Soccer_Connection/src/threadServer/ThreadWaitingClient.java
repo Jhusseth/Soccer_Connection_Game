@@ -17,7 +17,7 @@ public class ThreadWaitingClient extends Thread {
 	}
 	
 	public void run() {
-		System.out.println("SERVER ESCUCHANDO APUESTAS DE CLIENTES :::");
+		System.out.println("Server listening to the Players :::");
 		
 		while(!server.getGame().isPlaying() && !server.getGame().isFinishedMatch() && server.getdSock().isClosed() == false )
 		 {
@@ -29,8 +29,8 @@ public class ThreadWaitingClient extends Thread {
 						server.addSocketsActives(socket);
 						DataInputStream in = new DataInputStream(socket.getInputStream());
 						DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-						String mensaje = in.readUTF();
-						System.out.println("Cedula : " + mensaje.split(",")[0] + " Caballo : " +  mensaje.split(",")[1] + " Monto : $" + mensaje.split(",")[2] ) ;
+//						String mensaje = in.readUTF();
+//						System.out.println("N : " + mensaje.split(",")[0] + " Caballo : " +  mensaje.split(",")[1] + " Monto : $" + mensaje.split(",")[2] ) ;
 //						server.agregarClienteParaPersistir(mensaje);
 //						server.apostarPorCaballo(mensaje);
 						out.writeUTF("CONFIRMADO");

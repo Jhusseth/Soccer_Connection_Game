@@ -1,11 +1,6 @@
-/vista/
-/model/
-/threads/
-/modelCliente/
-/modelServer/
-/threadsClient/
-/threadServer/
-/modelClient/
-/Interfaz/
 /GUI/
 /controller/
+/modelClient/
+/modelServer/
+/threadServer/
+/threadsClient/
