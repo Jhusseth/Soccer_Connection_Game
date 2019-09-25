@@ -219,7 +219,7 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 
 	@Override
 	public void keyPressed(KeyEvent key) {
-//		System.out.println(key.getKeyCode());
+		System.out.println(key.getKeyCode());
 		
 		int kick =3;
 		if(key.getKeyCode() == 10){
@@ -257,6 +257,34 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 		}
 		else if(key.getKeyCode()==82){
 			paintComponents(this.getGraphics());
+		}
+		
+		else if(key.getKeyCode()==87){
+			
+			game.getGame().getPlayer2().setAddres(game.getGame().getPlayer2().UP);
+			kick =game.getGame().getPlayer2().UP;
+			//			repaint();
+		}
+		
+		else if(key.getKeyCode()==65){
+	
+			game.getGame().getPlayer2().setAddres(game.getGame().getPlayer2().LEFT);
+			kick =game.getGame().getPlayer2().LEFT;
+			//	repaint();
+		}
+		
+		else if(key.getKeyCode()==68){
+	
+			game.getGame().getPlayer2().setAddres(game.getGame().getPlayer2().RIGHT);
+			kick =game.getGame().getPlayer2().RIGHT;
+			//	repaint();
+		}
+		
+		else if(key.getKeyCode()==83){
+	
+			game.getGame().getPlayer2().setAddres(game.getGame().getPlayer2().DOWN);
+			kick =game.getGame().getPlayer2().DOWN;
+			//	repaint();
 		}
 		
 		else if(key.getKeyCode()==27){
