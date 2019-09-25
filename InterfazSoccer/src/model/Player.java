@@ -178,6 +178,51 @@ public class Player {
 		}
 	}
 	
+	public void moveC(int width, int heigh){
+		switch (addres) {
+		case UP:
+			posY--;
+			break;
+			
+		case DOWN:
+			posY++;
+			break;
+			
+		case LEFT:
+			posX--;
+			break;
+			
+		case RIGHT:
+			posX++;
+			break;
+
+		default:
+			break;
+		}
+		
+		if(posX<width){
+			addres=RIGHT;
+		}
+		
+		if(posX>=827){
+			addres=LEFT;
+		}
+
+		if(posY>=heigh-56){
+			addres=UP;
+		}
+		
+		if(posY<30){
+			addres=DOWN;
+		}
+	}
+	
+
+	public String[] data(){
+		String[] message = new String[]{""+ idPlayer,name,"" +addres,""+ posX,""+ posY};
+		return message;
+	}
+	
 
 	@Override
 	public String toString() {

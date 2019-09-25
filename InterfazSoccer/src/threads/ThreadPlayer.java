@@ -24,7 +24,8 @@ public class ThreadPlayer extends Thread {
 			try{
 			game.paintComponent();
 			Thread.sleep(3);
-			player.move(game.widthL(),game.height());
+			player.move((game.width()/2),game.height());
+			game.getGame().getPlayer2().moveC((game.width()/2),game.height());
 			}catch(Exception e){
 				e.printStackTrace();
 			}

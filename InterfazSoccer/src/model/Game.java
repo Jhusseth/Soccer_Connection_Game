@@ -3,12 +3,24 @@ package model;
 public class Game {
 	
 	private Player player;
+	private Player player2;
 	private Ball ball;
 	
 	
 	public Game() {
-		this.player = new Player("carlos",333,253);
-		this.ball = new Ball(1,437,260);
+		this.player = new Player("Jhusseth",333,253);
+		this.ball = new Ball(4,430,260);
+		this.player2 = new Player("Juan",630,253);
+	}
+
+
+	public Player getPlayer2() {
+		return player2;
+	}
+
+
+	public void setPlayer2(Player player2) {
+		this.player2 = player2;
 	}
 
 
@@ -20,6 +32,7 @@ public class Game {
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
+	
 
 
 	public Ball getBall() {
@@ -37,6 +50,12 @@ public class Game {
 				player.sethBall(true);
 			}
 		}
+		
+		if((ball.getPosX()-15<=player2.getPosX() && player2.getPosX()<=ball.getPosX()+15)){
+			if((ball.getPosY()-15<=player2.getPosY() && player2.getPosY()<=ball.getPosY()+15)){
+				player2.sethBall(true);
+			}
+		}
 	}
 	
 	public void manageBall(){
@@ -44,6 +63,11 @@ public class Game {
 //		 ball.setStopped(true);
 		 ball.setPosX(player.getPosX()+27);
 		 ball.setPosY(player.getPosY()+50);}
+		
+		if(player2.ishBall()){
+//			 ball.setStopped(true);
+			 ball.setPosX(player2.getPosX()-27);
+			 ball.setPosY(player2.getPosY()+50);}
 		
 	}
 
@@ -53,6 +77,12 @@ public class Game {
 			ball.setPosX(ball.getPosX());
 			ball.setPosY(ball.getPosY());
 			ball.setAddres(key);
+		}
+		
+		if(player2.ishBall()){
+			ball.setPosX(ball.getPosX());
+			ball.setPosY(ball.getPosY());
+			ball.setAddres(4);
 		}
 	}
 	
@@ -70,6 +100,5 @@ public class Game {
 		player.setPosY(253);
 		player.setAddres(3);
 	}
-	
 
 }

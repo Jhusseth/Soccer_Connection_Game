@@ -5,9 +5,9 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import gui.Options_Panel;
 import controller.ControllerClient;
 import controller.ControllerGame;
+import game_exec.ClientExecute;
 import model.Client;
 import model.Game;
 
@@ -37,9 +37,6 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 	/**
 	 * 
 	 */
-	
-	
-	private Options_Panel op;
 	private JPanel panel;
 	
 	private ControllerGame game;
@@ -50,7 +47,6 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 	ControllerClient control;
 	private JTextField clientInformation;
 	private JButton aceptBtn;
-	private static Client client;
 	private JLabel infoLabel;
 
 	public int getPuntaje2() {
@@ -95,9 +91,8 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 	}
 	@Override
 	public void initComponents() {
-		this.setSize(860,487);
+		setSize(860,487);
 		this.setTitle("SFCB                                                                                  <<<<<< SOCCER FULL HD 4k GAME >>>>>>>");
-		this.op = new Options_Panel(this);
 		addMouseListener(this);
 		addKeyListener(this);
 		this.setLayout(new BorderLayout());
@@ -105,12 +100,9 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 		panel.setLayout(new BorderLayout());
 		infoLabel = new JLabel("Ingresar el nick");
 		aceptBtn = new JButton("Nick");
-		aceptBtn.setSize(50, 50);
         clientInformation=new JTextField();
-        clientInformation.setSize(2,2);
         
         aceptBtn.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -131,8 +123,6 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 	@Override
 	public void inGame(){
 		
-	
-	
 		panel.removeAll();
 		panel.setBackground(SystemColor.window);
 		panel.setLayout(new BorderLayout());
@@ -140,7 +130,6 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 		JLabel field = new JLabel(mg);
 		
 		panel.add(field, BorderLayout.CENTER);
-		panel.add(op,BorderLayout.SOUTH);
 		
 		add(panel, BorderLayout.CENTER);
 //		getContentPane().add(op, BorderLayout.SOUTH);
@@ -151,16 +140,6 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 		game = new ControllerGame(this);
 		setResizable(false);
 		makeVisible();
-	}
-	
-	
-	public Options_Panel getOp() {
-		return op;
-	}
-
-
-	public void setOp(Options_Panel op) {
-		this.op = op;
 	}
 
 
@@ -180,27 +159,40 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 //		window.setVisible(true);
 //		
 //	}
-	@Override
-	public void paintBall(Graphics g,Game game, int x, int y){
-		Graphics2D g2 = (Graphics2D) g;	
-		g2.drawImage(game.getBall().getImg().getImage(),x, y,20,20, this);
-	}
 	
-	@Override
-	public void paintPlayer(Graphics g,Game game,int x, int y){
-		Graphics2D g2 = (Graphics2D) g;
-		g2.drawImage(game.getPlayer().getAvatar().getImage(), x, y,50,75, this);
-		
-	}
+//	@Override
+//	public void paintBall(Graphics g,Game game, int x, int y){
+//		Graphics2D g2 = (Graphics2D) g;	
+//		g2.drawImage(game.getBall().getImg().getImage(),x, y,20,20, this);
+//	}
+//	
+//	@Override
+//	public void paintPlayer(Graphics g,Game game,int x, int y){
+//		Graphics2D g2 = (Graphics2D) g;
+//		g2.drawImage(game.getPlayer().getAvatar().getImage(), x, y,50,75, this);
+//		
+//	}
 	
 	@Override
 	public void paintComponents(Graphics g) {
 		// TODO Auto-generated method stub
-		super.paintComponents(g);
+		super.paint(g);
 		Graphics2D g2 = (Graphics2D) g;	
+		
+		g2.setColor(Color.WHITE);
+		g2.setFont(new Font("Verdana",Font.BOLD,14 ));
+		
+		g2.drawString(game.getGame().getPlayer().getName(), game.getGame().getPlayer().getPosX(), game.getGame().getPlayer().getPosY());
+		g2.drawString(game.getGame().getPlayer2().getName(), game.getGame().getPlayer2().getPosX(),game.getGame().getPlayer2().getPosY());
+		
+		
 		g2.drawImage(game.getGame().getBall().getImg().getImage(),game.getGame().getBall().getPosX(),game.getGame().getBall().getPosY(),20,20, this);
 		
 		g2.drawImage(game.getGame().getPlayer().getAvatar().getImage(),game.getGame().getPlayer().getPosX(),game.getGame().getPlayer().getPosY(),50,75, this);
+		
+		ImageIcon  p2 = new ImageIcon("data/player2.png");
+				
+		g2.drawImage(p2.getImage(),game.getGame().getPlayer2().getPosX(),game.getGame().getPlayer2().getPosY(),50,75, this);
 		
 		g2.setColor(Color.WHITE);
 		g2.setFont(new Font("Verdana",Font.BOLD,14 ));
@@ -223,10 +215,6 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 	public void initGame() {
 		game.initGame();
 	}
-	
-	public void test(){
-		game.prueba();
-	}
 
 
 	@Override
@@ -238,25 +226,25 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 			initGame();
 		}
 		else if(key.getKeyCode()==38){
-			game.move();
+			
 			game.getGame().getPlayer().setAddres(game.getGame().getPlayer().UP);
 			kick =game.getGame().getPlayer().UP;
 //			repaint();
 		}
 		else if(key.getKeyCode()==40){
-			game.move();
+			
 			game.getGame().getPlayer().setAddres(game.getGame().getPlayer().DOWN);
 			kick =game.getGame().getPlayer().DOWN;
 //			repaint();
 		}
 		else if(key.getKeyCode()==37){
-			game.move();
+			
 			game.getGame().getPlayer().setAddres(game.getGame().getPlayer().LEFT);
 			kick =game.getGame().getPlayer().LEFT;
 //			repaint();
 		}
 		else if(key.getKeyCode()==39){
-			game.move();
+			
 			game.getGame().getPlayer().setAddres(game.getGame().getPlayer().RIGHT);
 			kick =game.getGame().getPlayer().RIGHT;
 //			repaint();
@@ -329,7 +317,7 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println(e.getX() + " " + e.getY());
+//		System.out.println(e.getX() + " " + e.getY());
 	}
 
 

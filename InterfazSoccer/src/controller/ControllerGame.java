@@ -52,11 +52,11 @@ public class ControllerGame{
 		return thread;
 	}
 	
-	public int widthL(){
+	public int width(){
 		
 		int rest = main.getPanel().getWidth()-850;
 		
-		return 850 + rest;
+		return (850 + rest);
 	}
 	
 
@@ -74,11 +74,9 @@ public class ControllerGame{
 		game.getPlayer().setWinner(false);
 		starThreadBall().start();
 		starThreadPlayer().start();
-	}
-	
-	public void prueba(){
-		game.getBall().setStopped(true);
-		game.getPlayer().setWinner(true);
+		
+		game.getPlayer2().setPlaying(false);
+		game.getPlayer2().setWinner(false);
 	}
 	
 	public void catchBall(){
@@ -88,13 +86,14 @@ public class ControllerGame{
 	
 	public void shot(int key){
 		
-		game.shot(key);
-		game.getBall().setStopped(false);
-		game.getPlayer().sethBall(false);
+//		if(game.getPlayer2().ishBall()){
+			game.shot(key);
+			game.getBall().setStopped(false);
+			game.getPlayer().sethBall(false);
+//		if(game.getPlayer().ishBall()){
+			game.getBall().setStopped(false);
+			game.getPlayer2().sethBall(false);
+//		}
 		
-	}
-	
-	public void move(){
-		game.getPlayer().setPlaying(true);
 	}
 }

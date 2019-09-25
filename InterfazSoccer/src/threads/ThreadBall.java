@@ -20,7 +20,7 @@ public class ThreadBall extends Thread {
 			try{
 			game.paintComponent();
 			Thread.sleep(4);
-			ball.move(game.widthL(),game.height());
+			ball.move(game.width(),game.height());
 			}catch(Exception e){
 				e.printStackTrace();
 			}

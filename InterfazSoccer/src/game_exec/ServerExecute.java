@@ -2,11 +2,15 @@ package game_exec;
 
 import gui.ViewG;
 import gui.ViewPanel;
+
+import javax.swing.JFrame;
+
 import controller.ControllerServer;
 import model.Server;
 import model.ServerAdmin;
 
 public class ServerExecute {
+
 
 	public static void main(String[] args) {
 		ViewG view = new ViewPanel();
