@@ -1,24 +1,12 @@
 package model;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.net.ConnectException;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import controller.ControllerClient;
-import controller.ControllerGame;
 
 public class Client extends Thread{
 	
@@ -30,7 +18,6 @@ public class Client extends Thread{
     DataInputStream read;
     DataOutputStream write;
     private boolean stopThread;
-    private ControllerGame controllerGame;
     private boolean cont;
     
     public Client() {
@@ -110,18 +97,15 @@ public class Client extends Thread{
 
         } catch (IOException ex) {
         	controlador.closeWindow();
-        	stop();
         	stopThread = true;
-        	
-        	
-//            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
        
         
         return "";
     }
-    
-  public void run() {
+    @SuppressWarnings("unused")
+ 
+    public void run() {
 	  
 	  while(!connected&&!stopThread) {
 		 connectWithServer();
@@ -130,12 +114,13 @@ public class Client extends Thread{
 	  if(!stopThread) {
 		 createStream();
 	  }
-	 cont = true;
+	 
+	  cont = true;
       while(!stopThread) {
-      	String msg = receiveMessage();
-      	
+		String msg = receiveMessage();	
       }
-  }
+ 
+    }
   
   public void disconnect() {
 	  try {

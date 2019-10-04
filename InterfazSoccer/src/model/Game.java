@@ -1,13 +1,9 @@
 package model;
 
-import controller.ControllerGame;
-
 public class Game implements Runnable{
 	
 	private Player player;
 	private Ball ball;
-	private String positions;
-	private ControllerGame controlGame;
 	private Player player2;
 	
 	

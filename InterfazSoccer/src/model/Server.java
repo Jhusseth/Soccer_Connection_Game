@@ -1,26 +1,14 @@
 package model;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JOptionPane;
-
 import controller.ControllerServer;
-import message.GameMessage;
 
 public class Server extends Thread {
 	
@@ -36,7 +24,6 @@ public class Server extends Thread {
     private int numberPlayers;
     ArrayList<Socket> playerSockets;
     private boolean execute;
-    private int numbers;
  
    
     public Server(Socket sc,ControllerServer cs) {
@@ -234,7 +221,7 @@ public class Server extends Thread {
     	}    
     }
     
-    public void clientDisconected(int reason) {
+	public void clientDisconected(int reason) {
     	try {
     		
     		switch(reason) {
@@ -252,7 +239,6 @@ public class Server extends Thread {
     			controlador.endConnection(1);
     			setExecute(false);
     			socket.close();
-
     			stop();
     			break;
     		case 3:
@@ -270,12 +256,4 @@ public class Server extends Thread {
 			e.printStackTrace();
 		}
     }
-    public void initGame() {
-    	
-    }
-
-
-
-
-
 }

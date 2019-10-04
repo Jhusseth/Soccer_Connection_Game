@@ -43,7 +43,8 @@ public class ControllerServer implements ActionListener{
 	    	
 	    }
 	    
-	    public void initializeGame() {
+	    @SuppressWarnings("static-access")
+		public void initializeGame() {
 	    	while(!initGame) {
 	    		
 	    		if(admin.getSavePlayers()== admin.MAX_NUMBER_PLAYERS) {
@@ -62,8 +63,6 @@ public class ControllerServer implements ActionListener{
 	    	
 	    	
 	    public void endConnection(int reason) {
-	    	
-	    	int j = reason;
 	    	
 	    	switch(reason) {
 	    	case 1:

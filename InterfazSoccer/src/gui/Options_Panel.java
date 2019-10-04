@@ -1,17 +1,12 @@
 package gui;
 
 import javax.swing.JPanel;
-
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Color;
 

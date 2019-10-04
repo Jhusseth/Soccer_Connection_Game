@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import gui.ViewC;
-import gui.ViewG;
 import model.Client;
 import controller.TimeR;
 
@@ -12,8 +11,10 @@ public class ControllerClient implements  ActionListener{
 	
 	  ViewC vista;
 	    Client model;
-private int time;
-private TimeR tm;
+
+	    private int time;
+
+	    private TimeR tm;
 	    public ControllerClient(ViewC vista, Client model) {
 	        this.vista = vista;
 	        this.model = model;
@@ -39,12 +40,6 @@ private TimeR tm;
 	    	tm.start();
 	    	
 	    }
-	   
-
-	    
-	    public void addMessage(String mensaje){
-//	        vista.addMessage(mensaje);
-	    }
 	    
 	    public void sendMessage(String msg) {
 	    	model.sendMessage(msg);
@@ -55,13 +50,12 @@ private TimeR tm;
 	    	model.shareGameInformation(msj);
 	    }
 	    
-	    public void stopTime() {
+	    @SuppressWarnings("deprecation")
+		public void stopTime() {
 	    	tm.stop();
 	    	
 	    }
 	    
-	 
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub

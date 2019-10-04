@@ -1,11 +1,8 @@
 package model;
 
-import java.io.BufferedWriter;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -13,7 +10,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import controller.ControllerServer;
-import message.GameMessage;
+//import message.GameMessage;
 
 public class ServerAdmin {
 	
@@ -120,10 +117,12 @@ public class ServerAdmin {
     	}
     }
     
+    @SuppressWarnings("unused")
     public void sendMessage2(String msj, Socket s) {
     	Socket[] players = new Socket[savePlayers];
     	map.values().toArray(players);
-    	String msg = msj;
+    	
+		String msg = msj;
 		
 		int cont1 = 0;
 		boolean p1 = false;
@@ -145,7 +144,6 @@ public class ServerAdmin {
 		
     	for(int i = 0;i<players.length;i++) {
     	       try {
-    	            
     	            DataOutputStream dt = new DataOutputStream(players[i].getOutputStream());
     	            dt.writeUTF(msj);
     	        } catch (IOException ex) {

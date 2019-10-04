@@ -6,12 +6,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import com.sun.javafx.scene.control.ControlAcceleratorSupport;
-
 import gui.Options_Panel;
 import controller.ControllerClient;
 import controller.ControllerGame;
-import model.Client;
 import model.Game;
 
 import javax.swing.JLabel;
@@ -20,15 +17,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import java.awt.SystemColor;
-import java.awt.RenderingHints.Key;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.Color;
 import java.awt.Font;
@@ -53,7 +47,6 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 	ControllerClient control;
 	private JTextField clientInformation;
 	private JButton aceptBtn;
-	private static Client client;
 	private JLabel infoLabel;
 	private String nick;
 
@@ -90,7 +83,7 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 	}
 	@Override
 	public void initComponents() {
-		this.setSize(860,487);
+		setSize(30,113);
 		this.setTitle("SFCB                                                                                  <<<<<< SOCCER FULL HD 4k GAME >>>>>>>");
 		this.op = new Options_Panel(this);
 		addMouseListener(this);
@@ -109,10 +102,10 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				nick = clientInformation.getText();
+				setNick(clientInformation.getText());
 				clientInformation.setEditable(false);
 				aceptBtn.setEnabled(false);
-				
+				setSize(100,113);
 				control.sendMessage(clientInformation.getText());
 				clientInformation.setText("ESPERANDO OTRO JUGADOR...");
 				
@@ -131,15 +124,12 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 	
 	@Override
 	public void inGame(){
-		
-	
-	
 		panel.removeAll();
+		this.setSize(860,487);
 		panel.setBackground(SystemColor.window);
 		panel.setLayout(new BorderLayout());
 		ImageIcon mg = new ImageIcon("data/Field.png");
 		JLabel field = new JLabel(mg);
-		JLabel timeLbl = new JLabel("0");
 		panel.add(field, BorderLayout.CENTER);
 
 		
@@ -245,18 +235,8 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 			JOptionPane.showMessageDialog(null, "Match Finished");
 			game.getGame().getPlayer().setWinner(true);
 			game.getGame().getBall().setStopped(true);
-
 			
-//			game.setGame(new Game());
-//			setPuntaje2(0);
-//			setPuntaje1(0);
-		
-			showInformation();
-//			setTime(0);
-//			paintComponents(this.getGraphics());
-
-			repaint();
-			validate();
+			showInformation();			
 		}
 
 		
@@ -281,53 +261,36 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 	@Override
 	public void keyPressed(KeyEvent key) {
 		
-		
-		int kick =3;
 //		if(key.getKeyCode() == 10){
 //			initGame();
 //		}
-		 if(key.getKeyCode()==38){
 		
-			control.sendGameInformation("38");
-			
-			repaint();
-			validate();
-			
+		 if(key.getKeyCode()==38){
+			control.sendGameInformation("38");	
 		}
 		else if(key.getKeyCode()==40){
 			control.sendGameInformation("40");
-			repaint();
-			validate();
 			
 		}
 		else if(key.getKeyCode()==37){
 			control.sendGameInformation("37");
-			repaint();
-			validate();
 		}
 		else if(key.getKeyCode()==39){
 			control.sendGameInformation("39");
-			repaint();
-			validate();
 		
 		}
 		else if(key.getKeyCode()==32){
 			control.sendGameInformation("32");
-			repaint();
-			validate();
+		}
+
+//		else if(key.getKeyCode()==82){
+//			paintComponents(this.getGraphics());
 //			repaint();
-			
-		}
-
-		else if(key.getKeyCode()==82){
-			paintComponents(this.getGraphics());
-			repaint();
-			validate();
-		}
-
-		else if(key.getKeyCode()==27){
-			System.exit(0);
-		}
+//		}
+//
+//		else if(key.getKeyCode()==27){
+//			System.exit(0);
+//		}
 		
 	}
 	
@@ -338,79 +301,45 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 //			initGame();
 //		}
 		 if(t==38 && p == 1){
-		
-			game.getGame().getPlayer().setAddres(game.getGame().getPlayer().UP);
 			kick =game.getGame().getPlayer().UP;
+			game.getGame().getPlayer().setAddres(kick);
+			game.getGame().getPlayer().move(game.width(), game.height());
 			repaint();
-			validate();
 		}
 		else if(t==40 && p == 1){
-			
-			game.getGame().getPlayer().setAddres(game.getGame().getPlayer().DOWN);
 			kick =game.getGame().getPlayer().DOWN;
-//			repaint();
+			game.getGame().getPlayer().setAddres(kick);
+			game.getGame().getPlayer().move(game.width(), game.height());
+			repaint();
 		}
 		else if(t==37 && p == 1){
-			
-			game.getGame().getPlayer().setAddres(game.getGame().getPlayer().LEFT);
 			kick =game.getGame().getPlayer().LEFT;
+			game.getGame().getPlayer().setAddres(kick);
+			game.getGame().getPlayer().move(game.width(), game.height());
 			repaint();
-			validate();
 		}
 		else if(t==39 && p == 1){
-			
-			game.getGame().getPlayer().setAddres(game.getGame().getPlayer().RIGHT);
 			kick =game.getGame().getPlayer().RIGHT;
+			game.getGame().getPlayer().setAddres(kick);
+			game.getGame().getPlayer().move(game.width(), game.height());
 			repaint();
-			validate();
 		}
 		
 		else if(t==32){
 			game.shot(kick);
 			repaint();
-			validate();
 			
 		}
 		else if(t==82){
 			paintComponents(this.getGraphics());
-		}
-		
-		else if(t==38 && p == 2){
-			
-			game.getGame().getPlayer2().setAddres(game.getGame().getPlayer2().UP);
-			kick =game.getGame().getPlayer2().UP;
 			repaint();
-			validate();
-		}
-		
-		else if(t==40 && p == 2){
-	
-			game.getGame().getPlayer2().setAddres(game.getGame().getPlayer2().LEFT);
-			kick =game.getGame().getPlayer2().LEFT;
-			repaint();
-			validate();
-		}
-		
-		else if(t==37 && p == 2){
-	
-			game.getGame().getPlayer2().setAddres(game.getGame().getPlayer2().RIGHT);
-			kick =game.getGame().getPlayer2().RIGHT;
-			repaint();
-			validate();
-		}
-		
-		else if(t==39 && p == 2){
-	
-			game.getGame().getPlayer2().setAddres(game.getGame().getPlayer2().DOWN);
-			kick =game.getGame().getPlayer2().DOWN;
-			repaint();
-			validate();
 		}
 		
 		else if(t==27){
 			System.exit(0);
 		}
 	}
+	
 	@Override
 	public int hightGoals(){
 		
@@ -557,6 +486,16 @@ public class GUI_MainGame extends JFrame implements KeyListener , MouseListener,
 	public void shareMessage(String msg) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	public String getNick() {
+		return nick;
+	}
+
+
+	public void setNick(String nick) {
+		this.nick = nick;
 	}
 	
 	

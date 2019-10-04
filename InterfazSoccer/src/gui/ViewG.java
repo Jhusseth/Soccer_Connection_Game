@@ -1,9 +1,6 @@
 package gui;
 
-import java.awt.Graphics;
-
 import controller.ControllerServer;
-import model.Game;
 
 public interface ViewG {
 	   final String SEND = "SEND";

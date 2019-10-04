@@ -142,19 +142,19 @@ public class Player {
 	public void move(int width, int heigh){
 		switch (addres) {
 		case UP:
-			posY--;
+			posY= posY-2;
 			break;
 			
 		case DOWN:
-			posY++;
+			posY= posY+2;
 			break;
 			
 		case LEFT:
-			posX--;
+			posX=posX-2;
 			break;
 			
 		case RIGHT:
-			posX++;
+			posX=posX+2;
 			break;
 
 		default:

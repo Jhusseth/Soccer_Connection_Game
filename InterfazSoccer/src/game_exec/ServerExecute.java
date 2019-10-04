@@ -3,7 +3,6 @@ package game_exec;
 import gui.ViewG;
 import gui.ViewPanel;
 import controller.ControllerServer;
-import model.Server;
 import model.ServerAdmin;
 
 public class ServerExecute {
