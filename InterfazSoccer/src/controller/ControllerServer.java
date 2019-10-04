@@ -55,9 +55,24 @@ public class ControllerServer implements ActionListener{
 	    	
 	    	}
 	    	}
-	    	
-	    	
 	    
+	    public void gameInformation(String msj, Socket s) {
+	    	admin.sendMessage2(msj, s);
+	    }
+	    	
+	    	
+	    public void endConnection(int reason) {
+	    	
+	    	int j = reason;
+	    	
+	    	switch(reason) {
+	    	case 1:
+	    		
+	    		admin.setDiscon(true);
+	    		admin.adminNotify(1);
+	    		break;
+	    	}
+	    }
 
 	    
 	    public void addMessage(String mensaje){
@@ -114,7 +129,7 @@ public class ControllerServer implements ActionListener{
 			  switch(e.getActionCommand()){
 	            case ViewG.SEND:
 	                vista.addMessage("Enviando mensaje al cliente...");
-	               
+	                admin.sendMessage(vista.getFieldText());
 	                vista.addMessage("Mensaje enviado.");
 	                
 	                break;

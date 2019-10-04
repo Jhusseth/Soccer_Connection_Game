@@ -1,6 +1,8 @@
 package model;
 
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -11,6 +13,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import controller.ControllerServer;
+import message.GameMessage;
 
 public class ServerAdmin {
 	
@@ -19,16 +22,23 @@ public class ServerAdmin {
     private int numberPlayers;
     private int savePlayers;
     Socket socket;
+    private boolean discon;
     ServerSocket sk;
+    ServerSocket sk2;
+    private int numberOfConnectedPlayers;
 	public static final int PUERTO = 5650;
 	public static final String IP = "localhost";
 	ControllerServer controlador;
 	private HashMap<String,Socket> map;
+
+    DataInputStream read;
+    DataOutputStream write;
 	
     
     public ServerAdmin() {
     	playerSockets = new ArrayList<Socket>();
     	map = new HashMap<String, Socket>();
+    	
     }
 
     public void setController(ControllerServer controlador){
@@ -39,8 +49,8 @@ public class ServerAdmin {
         try {
         	numberPlayers = 0;
         	savePlayers = 0;
-            sk = new ServerSocket(PUERTO);
-
+            sk = new ServerSocket(PUERTO,MAX_NUMBER_PLAYERS);
+   
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -50,21 +60,19 @@ public class ServerAdmin {
     	try {
 			
 	    	while(numberPlayers<MAX_NUMBER_PLAYERS) {
+	    		
+	    		numberPlayers ++;
 	    		Socket sock = sk.accept();
 	    		new Thread(new Server(sock,controlador)).start();
 	    		
-	            playerSockets.add(sock);
-	            numberPlayers ++;
-	            controlador.addMessage("Clientes conectados " + numberPlayers);
-	          
 	    	}
 	    	boolean ct = true;
-	    	
 	    	while(ct) {
-	    		System.out.println(savePlayers);
-	    	if(savePlayers== MAX_NUMBER_PLAYERS) {
-	    	
+	    		System.out.println("");
+	    	if(savePlayers== MAX_NUMBER_PLAYERS) {	  
+	    	controlador.setInitGame(true);
 	    	sendMessage("INIT");
+	    	
 	    	ct = false;
 	    	}
 	    	}
@@ -76,11 +84,26 @@ public class ServerAdmin {
     }
     
     public void saveClient(String msg, Socket s) {
-    	
+    	savePlayers ++;  
     	map.put(msg, s);
-    	savePlayers ++;
+        playerSockets.add(s);       
+        numberOfConnectedPlayers ++;
+        controlador.addMessage("Clientes conectados " + numberOfConnectedPlayers);
+    	  	
+    }
+    
+    public void adminNotify(int reason) {
     	
-
+    	
+    	switch(reason) {
+    	case 1:
+    		
+    		numberOfConnectedPlayers --;
+    		controlador.addMessage("Clientes conectados " + numberOfConnectedPlayers);
+    		
+    		break;
+    	}
+    	
     }
     
     public void sendMessage(String msj) {
@@ -89,19 +112,47 @@ public class ServerAdmin {
     	for(int i = 0;i<players.length;i++) {
     	       try {
     	            
-    	            
-    	            OutputStream os = players[i].getOutputStream();
-    	            OutputStreamWriter osw = new OutputStreamWriter(os);
-    	            BufferedWriter bw = new BufferedWriter(osw);
-    	            bw.write(msj);
-    	            bw.newLine();
-    	            bw.flush();
+    	            DataOutputStream dt = new DataOutputStream(players[i].getOutputStream());
+    	            dt.writeUTF(msj);
     	        } catch (IOException ex) {
     	            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
     	        }
     	}
     }
     
+    public void sendMessage2(String msj, Socket s) {
+    	Socket[] players = new Socket[savePlayers];
+    	map.values().toArray(players);
+    	String msg = msj;
+		
+		int cont1 = 0;
+		boolean p1 = false;
+		boolean p2 = false;
+		for(int i = 0; i<players.length;i++) {
+			if(s == players[i]) {
+				cont1 = i;
+			}
+		}
+		if(cont1<players.length-1) {
+			p1 = true;
+			msj += ":1";
+		}
+		else {
+			p2 = true;
+			msj += ":2";
+		}
+       
+		
+    	for(int i = 0;i<players.length;i++) {
+    	       try {
+    	            
+    	            DataOutputStream dt = new DataOutputStream(players[i].getOutputStream());
+    	            dt.writeUTF(msj);
+    	        } catch (IOException ex) {
+    	            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+    	        }
+    	}
+    }
 
     
     
@@ -151,6 +202,16 @@ public class ServerAdmin {
 	public void setControlador(ControllerServer controlador) {
 		this.controlador = controlador;
 	}
+	
+	
+
+	public boolean isDiscon() {
+		return discon;
+	}
+
+	public void setDiscon(boolean discon) {
+		this.discon = discon;
+	}
 
 	public HashMap<String, Socket> getMap() {
 		return map;
@@ -184,15 +245,11 @@ public class ServerAdmin {
 		
 		if(map.containsKey(nm)) {
 	        try {
+	        	
 	            map.get(nm).close();
 	        } catch (IOException ex) {
 	            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
 	        }
 		}
 	}
-    
-    
- 
-    
-    
 }

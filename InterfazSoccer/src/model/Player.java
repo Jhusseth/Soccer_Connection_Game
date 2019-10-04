@@ -177,7 +177,6 @@ public class Player {
 			addres=DOWN;
 		}
 	}
-	
 	public void moveC(int width, int heigh){
 		switch (addres) {
 		case UP:
@@ -216,13 +215,6 @@ public class Player {
 			addres=DOWN;
 		}
 	}
-	
-
-	public String[] data(){
-		String[] message = new String[]{""+ idPlayer,name,"" +addres,""+ posX,""+ posY};
-		return message;
-	}
-	
 
 	@Override
 	public String toString() {

@@ -51,12 +51,16 @@ public class ControllerGame{
 		ThreadPlayer thread = new ThreadPlayer(game.getPlayer(),this);
 		return thread;
 	}
+	public ThreadPlayer starThreadPlayer2(){
+		ThreadPlayer thread = new ThreadPlayer(game.getPlayer2(),this);
+		return thread;
+	}
 	
 	public int width(){
 		
 		int rest = main.getPanel().getWidth()-850;
 		
-		return (850 + rest);
+		return 850 + rest;
 	}
 	
 
@@ -72,11 +76,18 @@ public class ControllerGame{
 		game.getBall().setStopped(false);
 		game.getPlayer().setPlaying(false);
 		game.getPlayer().setWinner(false);
+
+//		game.getPlayer2().setPlaying(false);
+//		game.getPlayer2().setWinner(false);
+//		starThreadPlayer2().start();
 		starThreadBall().start();
 		starThreadPlayer().start();
 		
-		game.getPlayer2().setPlaying(false);
-		game.getPlayer2().setWinner(false);
+	}
+	
+	public void prueba(){
+		game.getBall().setStopped(true);
+		game.getPlayer().setWinner(true);
 	}
 	
 	public void catchBall(){
@@ -86,14 +97,27 @@ public class ControllerGame{
 	
 	public void shot(int key){
 		
-//		if(game.getPlayer2().ishBall()){
-			game.shot(key);
-			game.getBall().setStopped(false);
-			game.getPlayer().sethBall(false);
-//		if(game.getPlayer().ishBall()){
-			game.getBall().setStopped(false);
-			game.getPlayer2().sethBall(false);
-//		}
+		game.shot(key);
+		game.getBall().setStopped(false);
+		game.getPlayer().sethBall(false);
 		
+	}
+	
+	public void move(){
+		game.getPlayer().setPlaying(true);
+	}
+	
+
+
+	
+	public void messageD(String msg) {
+		main.passMessage(msg);
+	}
+	
+	public void setPlayer2Name(String n) {
+		game.setPlayer2Name(n);
+	}
+	public void setPlayerName(String n) {
+		game.setPlayerName(n);
 	}
 }

@@ -42,6 +42,9 @@ public class ViewPanel extends JFrame implements ViewG{
         jLabelTextoAEnviar.setText("Texto a Enviar:");
 
         jButton.setText("Enviar");
+        jButton.setEnabled(false);
+        jLabelTextoAEnviar.setEnabled(false);
+       
         
         jButton.addActionListener(new ActionListener() {
 			
@@ -130,6 +133,11 @@ public class ViewPanel extends JFrame implements ViewG{
     public void inicialize(){
         jButton.setActionCommand(SEND);
         jButton.addActionListener(control);
+    }
+    
+    @Override
+    public String getFieldText() {
+    	return jTextFS.getText();
     }
     
     

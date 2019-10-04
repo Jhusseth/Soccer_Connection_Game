@@ -2,13 +2,10 @@ package game_exec;
 
 import gui.GUI_MainGame;
 import gui.ViewC;
-
-import javax.swing.JFrame;
-
 import controller.ControllerClient;
 import model.Client;
 
-public class ClientExecute extends JFrame {
+public class ClientExecute {
 
 	public static void main(String[] args) {
 		ViewC view = new GUI_MainGame();

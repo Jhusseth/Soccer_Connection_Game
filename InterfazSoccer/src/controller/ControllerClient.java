@@ -6,12 +6,14 @@ import java.awt.event.ActionListener;
 import gui.ViewC;
 import gui.ViewG;
 import model.Client;
+import controller.TimeR;
 
-public class ControllerClient implements ActionListener{
+public class ControllerClient implements  ActionListener{
 	
 	  ViewC vista;
 	    Client model;
-
+private int time;
+private TimeR tm;
 	    public ControllerClient(ViewC vista, Client model) {
 	        this.vista = vista;
 	        this.model = model;
@@ -19,17 +21,23 @@ public class ControllerClient implements ActionListener{
 	    
 	    public void initializeActivity(){
 	        vista.makeVisible();
-//	        vista.inicialize();
-//	        vista.addMessage("abriendo el puerto...");
-	        model.connectWithServer();
-//	        vista.addMessage("Esperando al cliente...");
-	        model.createStream();
 	        model.start();
 	
 	    }
 	    
-	    public void initalizeGame() {
+	    public int getTime() {
+			return time;
+		}
+
+		public void setTime(int time) {
+			this.time = time;
+		}
+
+		public void initalizeGame() {
 	    	vista.inGame();
+	    	tm = new TimeR(vista);
+	    	tm.start();
+	    	
 	    }
 	   
 
@@ -40,6 +48,16 @@ public class ControllerClient implements ActionListener{
 	    
 	    public void sendMessage(String msg) {
 	    	model.sendMessage(msg);
+	    }
+	    
+	    public void sendGameInformation(String msj) {
+	    	
+	    	model.shareGameInformation(msj);
+	    }
+	    
+	    public void stopTime() {
+	    	tm.stop();
+	    	
 	    }
 	    
 	 
@@ -56,6 +74,26 @@ public class ControllerClient implements ActionListener{
 	                break;
 	        }
 		}
+		
+		public void disconnectClient() {
+			model.disconnect();
+		}
+		
+		public void closeWindow() {
+			vista.close();
+		}
+		
+		public void shareMessage(String msg) {
+			String[] msgArray = msg.split(":");
+			
+			vista.playerMovement(Integer.parseInt(msgArray[0]),Integer.parseInt(msgArray[1]));
+		}
+		
+		public void passMessage(String msg) {
+			model.shareInformation(msg);
+		}
+
+
 		
 		
 

@@ -17,6 +17,7 @@ public interface ViewG {
 	    public void setController(ControllerServer control);
 	    public void makeVisible();
 	    public void inicialize();
+	    public String getFieldText();
 	  
 }
 

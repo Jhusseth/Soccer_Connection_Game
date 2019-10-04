@@ -2,6 +2,8 @@ package model;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -10,41 +12,152 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import controller.ControllerServer;
+import javax.swing.JOptionPane;
 
-public class Server extends Thread{
+import controller.ControllerServer;
+import message.GameMessage;
+
+public class Server extends Thread {
 	
 	ControllerServer controlador;
 	public static final int PUERTO = 5650;
 	public static final String IP = "localhost";
     ServerSocket sk;
+    private String clientNick;
     Socket socket;
-    BufferedReader br;
-    BufferedWriter bw;
+    DataInputStream read;
+    DataOutputStream write;
     public static final int MAX_NUMBER_PLAYERS = 4;
     private int numberPlayers;
     ArrayList<Socket> playerSockets;
+    private boolean execute;
+    private int numbers;
+ 
    
     public Server(Socket sc,ControllerServer cs) {
     	socket = sc;
     	controlador = cs;
     	createStream();
+    
     }
     
 
     
-    public void createStream(){
+    public ControllerServer getControlador() {
+		return controlador;
+	}
+
+
+
+	public void setControlador(ControllerServer controlador) {
+		this.controlador = controlador;
+	}
+
+
+
+	public ServerSocket getSk() {
+		return sk;
+	}
+
+
+
+	public void setSk(ServerSocket sk) {
+		this.sk = sk;
+	}
+
+
+
+	public String getClientNick() {
+		return clientNick;
+	}
+
+
+
+	public void setClientNick(String clientNick) {
+		this.clientNick = clientNick;
+	}
+
+
+
+	public Socket getSocket() {
+		return socket;
+	}
+
+
+
+	public void setSocket(Socket socket) {
+		this.socket = socket;
+	}
+
+
+
+
+
+
+	public int getNumberPlayers() {
+		return numberPlayers;
+	}
+
+
+
+	public void setNumberPlayers(int numberPlayers) {
+		this.numberPlayers = numberPlayers;
+	}
+
+
+
+	public ArrayList<Socket> getPlayerSockets() {
+		return playerSockets;
+	}
+
+
+
+	public void setPlayerSockets(ArrayList<Socket> playerSockets) {
+		this.playerSockets = playerSockets;
+	}
+
+
+
+	public boolean isExecute() {
+		return execute;
+	}
+
+
+
+	public void setExecute(boolean execute) {
+		this.execute = execute;
+	}
+
+
+
+	public static int getPuerto() {
+		return PUERTO;
+	}
+
+
+
+	public static String getIp() {
+		return IP;
+	}
+
+
+
+	public static int getMaxNumberPlayers() {
+		return MAX_NUMBER_PLAYERS;
+	}
+
+
+
+	public void createStream(){
         try {
-            InputStream is = socket.getInputStream();
-            InputStreamReader isr = new InputStreamReader(is);
-            br = new BufferedReader(isr);
+        	 write = new DataOutputStream(socket.getOutputStream());
             
-            OutputStream os = socket.getOutputStream();
-            OutputStreamWriter osw = new OutputStreamWriter(os);
-            bw = new BufferedWriter(osw);
+        	 read = new DataInputStream(socket.getInputStream());
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,48 +165,117 @@ public class Server extends Thread{
     
     public void sendMessage(String mensaje){
         try {
-            bw.write(mensaje);
-            bw.newLine();
-            bw.flush();
+            write.writeUTF(mensaje);
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
-    public String receiveMessage(){
+    public String receiveMessage() {
         try {
-            String mensaje = br.readLine();
+        	if(!socket.isClosed()) {
+            String mensaje = read.readUTF();
+            switch(mensaje) {
             
-            return mensaje;
+          
+            
+            case "CLOSED":
+            	clientDisconected(2);
+            	
+            	break;
+            	
+            case "GAME":
+            	controlador.initializeGame();
+            	default:
+            	
+            		
+            		return mensaje;
+            }
+        	}
+        	
+           
         } catch (IOException ex) {
+        	
+        	
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        	
         }
         return "";
     }
     
     public void run(){
-    	String msg = receiveMessage();
-    	int cont = 0;
-        
+    	
+    	clientNick = receiveMessage();
+    	execute = true;
+    	if(clientNick == null) {
+    		clientDisconected(1);
+    	}
+    	else {    	
+        	controlador.saveNick(clientNick, socket);
+        	controlador.addMessage("Jugador: "+ clientNick + " esta listo...");
         	
-        	
-        	controlador.saveNick(msg, socket);
-        	controlador.addMessage("Jugador: "+ msg + " esta listo...");
-        	cont++;
-        	
-        
-        
-        controlador.setInGame(true);
-      
-//        	sendMessage("INIT");
-        
-      
-        
+    	}    	
+   
+
+   	while(true) {
+   		if(controlador.isInitGame()) {
+   			String msg;
+			try {
+				msg = read.readUTF();
+				
+				controlador.gameInformation(msg, socket);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+   			
+   		}
+	
+    	}    
     }
     
+    public void clientDisconected(int reason) {
+    	try {
+    		
+    		switch(reason) {
+    		case 1:
+    			controlador.addMessage("Cliente "+ clientNick + " se ha desconectado.");
+    			socket.close();
+    			stop();
+    			setExecute(false);
+    			controlador.endConnection(1);
+    		
+
+    			break;
+    		case 2:
+    			controlador.addMessage("Cliente: "+ clientNick + " se ha desconectado.");
+    			controlador.endConnection(1);
+    			setExecute(false);
+    			socket.close();
+
+    			stop();
+    			break;
+    		case 3:
+    			sendMessage("CLOSE");
+    			controlador.addMessage("Cliente "+ clientNick + " ha sido desconectado.");
+    			setExecute(false);
+    			socket.close();
+    			stop();
+    			break;
+    		}
+    	
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
     public void initGame() {
     	
     }
+
+
+
 
 
 }

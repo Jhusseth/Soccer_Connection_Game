@@ -1,16 +1,29 @@
 package model;
 
-public class Game {
+import controller.ControllerGame;
+
+public class Game implements Runnable{
 	
 	private Player player;
-	private Player player2;
 	private Ball ball;
+	private String positions;
+	private ControllerGame controlGame;
+	private Player player2;
+	
 	
 	
 	public Game() {
-		this.player = new Player("Jhusseth",333,253);
+		this.player = new Player("  1  ",333,253);
 		this.ball = new Ball(4,430,260);
-		this.player2 = new Player("Juan",630,253);
+		this.player2 = new Player("  2  ",630,253);
+	}
+	
+	public void setPlayerName(String n) {
+		player.setName(n);
+	}
+	
+	public void setPlayer2Name(String n) {
+		player2.setName(n);
 	}
 
 
@@ -82,7 +95,7 @@ public class Game {
 		if(player2.ishBall()){
 			ball.setPosX(ball.getPosX());
 			ball.setPosY(ball.getPosY());
-			ball.setAddres(4);
+			ball.setAddres(key);
 		}
 	}
 	
@@ -100,5 +113,23 @@ public class Game {
 		player.setPosY(253);
 		player.setAddres(3);
 	}
+	
+
+	
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		try {
+			Thread.sleep(60);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 
 }
