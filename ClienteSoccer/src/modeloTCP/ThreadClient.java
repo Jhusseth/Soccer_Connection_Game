@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
+import java.net.MulticastSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
@@ -13,11 +13,22 @@ import java.util.logging.Logger;
 
 public class ThreadClient extends Thread {
 	public static final int PORT = 5001;
+	public static final int PORT_AUDIO = 9999;
+	public static final String DIRECCION_MULTICAST = "224.0.0.1";
 	private Client_GUI gui;
 	private Socket socket;
 	private DataInputStream reader;
 	private DataOutputStream writer;
 	
+	private MulticastSocket dtSocket;
+	private HiloAudioUDPClient audio;
+	
+	public MulticastSocket getDtSocket() {
+		return dtSocket;
+	}
+	public void setDtSocket(MulticastSocket dtSocket) {
+		this.dtSocket = dtSocket;
+	}
 	public ThreadClient(Client_GUI gui) {
 		try {
 			this.gui=gui;
@@ -81,9 +92,11 @@ public class ThreadClient extends Thread {
 			gui.update();
 			Thread.sleep(100);
 			}while(state.equals("continue"));
-			state=reader.readUTF();
-			time=reader.readUTF();
 			gui.setTime("00:"+ "0"+time);
+			System.out.println("Empieza audio");
+			audio = new HiloAudioUDPClient(this);			
+			audio.start();
+			System.out.println("Termina audio");
 			//leeer reporte
 			
 		} catch (Exception e) {

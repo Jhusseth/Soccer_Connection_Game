@@ -4,16 +4,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ThreadServer extends Thread {
 	public static final int PORT = 5001;
 	private ServerSocket socket;
 	private static List<Match> matches;
+	
+	public static final int PORT_AUDIO = 9999;
+	public static final String MUlTICAST = "224.0.0.1";
 
 	public ThreadServer() {
 		try {
-			socket = new ServerSocket(PORT);
-			
+			socket = new ServerSocket(PORT);		
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -21,7 +25,7 @@ public class ThreadServer extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println("conecting..");
+		System.out.println("Conecting..");
 		try {
 			matches = new ArrayList<Match>();
 			while (true) {
@@ -36,11 +40,17 @@ public class ThreadServer extends Thread {
 					if (players == 1) {
 						match.addPlayer(tmp);
 						match.start();
+						new Timer().schedule(new TimerTask() {
+							@Override
+							public void run() {
+								sendAudio();
+								System.out.println("Se empieza el envio del audioz"+true);
+							}
+						}, 10);
 					} else if (players == 2) {
 						match = new Match();
 						match.addPlayer(tmp);
-						matches.add(match);
-
+						matches.add(match);						
 					}
 				}
 			}
@@ -48,6 +58,11 @@ public class ThreadServer extends Thread {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public void sendAudio() {
+		HiloAudioUDPServer audio = new HiloAudioUDPServer(MUlTICAST,PORT_AUDIO);
+		audio.start();
 	}
 	
 	public static void main(String[] args) {

@@ -79,13 +79,10 @@ public class Player extends Item implements Runnable{
 			String balonP=balon.x+" "+balon.y;
 			writer.writeUTF(balonP);
 			resta=(int)((System.currentTimeMillis()-match.getTime())/1000);
-			System.out.println(""+ resta);
-		}while(resta<Match.DURATION);
-		
+		}while(resta<20);
 		System.out.println("end");
 		writer.writeUTF("end");
 		writer.writeUTF("0");
-		
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
