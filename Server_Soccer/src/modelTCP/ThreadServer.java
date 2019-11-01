@@ -61,7 +61,7 @@ public class ThreadServer extends Thread {
 	}
 	
 	public void sendAudio() {
-		HiloAudioUDPServer audio = new HiloAudioUDPServer(MUlTICAST,PORT_AUDIO);
+		ThreadAudioUDPServer audio = new ThreadAudioUDPServer(MUlTICAST,PORT_AUDIO);
 		audio.start();
 	}
 	

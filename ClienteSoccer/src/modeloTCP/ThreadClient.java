@@ -21,7 +21,7 @@ public class ThreadClient extends Thread {
 	private DataOutputStream writer;
 	
 	private MulticastSocket dtSocket;
-	private HiloAudioUDPClient audio;
+	private ThreadAudioUDPClient audio;
 	
 	public MulticastSocket getDtSocket() {
 		return dtSocket;
@@ -94,7 +94,7 @@ public class ThreadClient extends Thread {
 			}while(state.equals("continue"));
 			gui.setTime("00:"+ "0"+time);
 			System.out.println("Empieza audio");
-			audio = new HiloAudioUDPClient(this);			
+			audio = new ThreadAudioUDPClient(this);			
 			audio.start();
 			System.out.println("Termina audio");
 			//leeer reporte

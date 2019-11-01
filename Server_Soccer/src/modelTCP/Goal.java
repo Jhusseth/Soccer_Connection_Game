@@ -1,11 +1,11 @@
 package modelTCP;
 
-public class Gol {
+public class Goal {
 	
 	private int time;
 
 	
-	public Gol(int time) {
+	public Goal(int time) {
 		super();
 		this.time = time;
 	}

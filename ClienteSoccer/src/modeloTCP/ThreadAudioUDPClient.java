@@ -14,14 +14,14 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 
 
-public class HiloAudioUDPClient extends Thread{
+public class ThreadAudioUDPClient extends Thread{
 	
 	AudioInputStream audioInputStream;
 	SourceDataLine sourceDataLine;	
 	
 	private ThreadClient cliente;
 
-	public HiloAudioUDPClient(ThreadClient cliente) {
+	public ThreadAudioUDPClient(ThreadClient cliente) {
 		
 		this.cliente = cliente;
 	}

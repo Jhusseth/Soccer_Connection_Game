@@ -13,7 +13,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 
-public class HiloAudioUDPServer extends Thread {
+public class ThreadAudioUDPServer extends Thread {
 
 	    private SourceDataLine sLine;
 	    private AudioFormat audioFormat;
@@ -29,7 +29,7 @@ public class HiloAudioUDPServer extends Thread {
 	    private long sleepTimeMillis;
 	    private int sleepTimeNanos, epsilon;
 
-	    public HiloAudioUDPServer(String host, int port) {      
+	    public ThreadAudioUDPServer(String host, int port) {      
 	        this.host=host;
 	        this.port=port;
 	        init();
@@ -64,11 +64,6 @@ public class HiloAudioUDPServer extends Thread {
 	            byte bytes[] =  new byte[4096];
 	            byte bytes2[] =  new byte[1024];
 	            int bytesRead=0;
-	            //The sending rythm of the data have to be compatible with an audio streaming.
-	            //So, I'll sleep the streaming thread for (1/SampleRate) seconds * (bytes.lenght/4) - epsilon
-	            //=> bytes.lenght/4 because 4 values = 1 frame => For ex, in  1024 bits, there are 1024/4 = 256 frames
-	            //epsilon because the instructions themselves takes time.
-	            //The value have to be convert in milliseconds et nanoseconds.
 	            sleepTime=(1024/audioFormat.getSampleRate());
 	            epsilon=400000;
 	            sleepTimeMillis=(long)(sleepTime*1000);

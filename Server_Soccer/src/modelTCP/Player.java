@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class Player extends Item implements Runnable{
 	
-	private List<Gol> goles;
+	private List<Goal> goles;
 	private Socket playerSocket;
 	private DataInputStream reader;
 	private DataOutputStream writer;
@@ -40,10 +40,10 @@ public class Player extends Item implements Runnable{
     }
 	
 	public void addGol(int time) {
-		goles.add(new Gol(time));
+		goles.add(new Goal(time));
 	}
 	
-	public List<Gol> getGoles(){
+	public List<Goal> getGoles(){
 		return goles;
 	}
 
