@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 
 public class ThreadClient extends Thread {
+	public static final int PORT = 5001;
 	private Client_GUI gui;
 	private Socket socket;
 	private DataInputStream reader;
@@ -20,7 +21,7 @@ public class ThreadClient extends Thread {
 	public ThreadClient(Client_GUI gui) {
 		try {
 			this.gui=gui;
-			socket=new Socket("localhost",5001);
+			socket=new Socket("localhost",PORT);
 			createStream();
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -51,7 +52,7 @@ public class ThreadClient extends Thread {
 			gui.setOtherName(otherName);
 			state=reader.readUTF();
 			String time=reader.readUTF();
-			gui.setTime(time);
+			gui.setTime("00:"+ time);
 			
 			do {
 			Point pos=gui.getPlayer();
@@ -76,12 +77,13 @@ public class ThreadClient extends Thread {
 			
 			state=reader.readUTF();
 			time=reader.readUTF();
-			gui.setTime(time);
-			System.out.println(time);
+			gui.setTime("00:"+ time);
 			gui.update();
 			Thread.sleep(100);
 			}while(state.equals("continue"));
-			
+			state=reader.readUTF();
+			time=reader.readUTF();
+			gui.setTime("00:"+ "0"+time);
 			//leeer reporte
 			
 		} catch (Exception e) {

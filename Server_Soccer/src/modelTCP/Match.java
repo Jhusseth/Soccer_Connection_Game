@@ -10,19 +10,23 @@ public class Match {
 	private Player player2;
 	private long time;
 	private boolean start;
+	
+	private boolean goal;
+	private String report;
 
 	public Match() {
-		balon = new Item(3, new Point(100,100), "","Balon");
+		balon = new Item(0, new Point(427, 240), "Ball","");
+		report = "RESULTADOS \n \n";
 	}
 
 	public boolean addPlayer(Socket so)throws Exception {
 
 		if (player1 == null) {
-			player1 = new Player(1,new Point(), Item.IMAGE_PLAYER, so,this);
+			player1 = new Player(1,new Point(300, 185), "", so,this);
 			new Thread(player1).start();
 			return true;
 		} else if (player2 == null) {
-			player2 = new Player(2,new Point(), Item.IMAGE_PLAYER, so,this);
+			player2 = new Player(2,new Point(525, 185), "", so,this);
 			new Thread(player2).start();
 			return true;
 		}
@@ -70,7 +74,10 @@ public class Match {
 		return time;
 	}
 
-	
+	public void reporte(String rp) {
+		report += "Estadisticas del partido \n";
+		report+= rp + "\n \n";
+	}
 
 
 }

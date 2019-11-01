@@ -31,9 +31,9 @@ public class Client_GUI extends JFrame implements KeyListener {
 	public Client_GUI() {
 		ImageIcon pl=new ImageIcon("data/player2.png");
 		ImageIcon bl=new ImageIcon("data/ball.png");
-		time="Start";
-		player1 = new Item(0, new Point(60, 60), "",pl);
-		balon = new Item(0, new Point(40, 40), "",bl);
+		time="00:00";
+		player1 = new Item(2, new Point(525, 185), "Cliente 2",pl);
+		balon = new Item(0, new Point(427, 240), "Ball",bl);
 		
 		init();
 		field = new Field_Panel();
@@ -52,7 +52,7 @@ public class Client_GUI extends JFrame implements KeyListener {
 		setTitle(":: Cliente :: " + name + " ::");
 		ImageIcon pl=new ImageIcon("data/player1.png");
 
-		player = new Item(0, new Point(30, 30), name,pl);
+		player = new Item(1, new Point(300, 185), name,pl);
 		setVisible(true);
 	}
 
@@ -154,13 +154,14 @@ public class Client_GUI extends JFrame implements KeyListener {
 		
 		g.drawString(player1.getName(), player1.getPos().x, player1.getPos().y);
 		g.drawImage(player1.getImage().getImage(),player1.getPos().x, player1.getPos().y,50,75, null);
-		g.setFont(new Font("Verdana",Font.BOLD,50 ));
+		
+		g.setFont(new Font("Verdana",Font.BOLD,30 ));
 		g.setColor(Color.BLACK);
 
-		g.drawString(time, this.getWidth()/2, 75);
+		g.drawString(time, (this.getWidth()/2)-50, 60);
 		g.setFont(new Font("Verdana",Font.BOLD,10 ));
 
-		g.drawImage(balon.getImage().getImage(),balon.getPos().x, balon.getPos().y,25,25, null);
+		g.drawImage(balon.getImage().getImage(),balon.getPos().x, balon.getPos().y,20,20, null);
 	}
 
 	public String getPlayerName() {

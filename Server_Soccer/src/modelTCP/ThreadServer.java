@@ -21,11 +21,11 @@ public class ThreadServer extends Thread {
 
 	@Override
 	public void run() {
+		System.out.println("conecting..");
 		try {
 			matches = new ArrayList<Match>();
 			while (true) {
 				Socket tmp = socket.accept();
-				System.out.println("conecting..");
 				if (matches.size() == 0) {
 					Match match = new Match();
 					match.addPlayer(tmp);

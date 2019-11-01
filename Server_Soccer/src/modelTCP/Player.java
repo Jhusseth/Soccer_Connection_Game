@@ -18,8 +18,6 @@ public class Player extends Item implements Runnable{
 	private DataInputStream reader;
 	private DataOutputStream writer;
 	private Match match;
-
-	
 	
 	public Player(int id ,Point pos, String image,Socket so,Match match)throws Exception {
 		super(id, pos, image,"");
@@ -56,7 +54,7 @@ public class Player extends Item implements Runnable{
 				writer.writeUTF("waiting");
 			}
 			writer.writeUTF(match.getPlayer(getId()).getName());
-			int resta=(int)((System.currentTimeMillis()-match.getTime())/1000);
+			int resta=0;
 			
 		do {
 			writer.writeUTF("continue");
@@ -81,24 +79,17 @@ public class Player extends Item implements Runnable{
 			String balonP=balon.x+" "+balon.y;
 			writer.writeUTF(balonP);
 			resta=(int)((System.currentTimeMillis()-match.getTime())/1000);
-			
+			System.out.println(""+ resta);
 		}while(resta<Match.DURATION);
 		
+		System.out.println("end");
 		writer.writeUTF("end");
 		writer.writeUTF("0");
 		
 		
-
-		System.out.println("end");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
-		
+		}	
 	}
-	
-	
-  
-
 }
