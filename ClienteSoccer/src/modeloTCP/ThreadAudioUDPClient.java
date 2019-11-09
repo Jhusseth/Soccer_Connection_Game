@@ -20,10 +20,17 @@ public class ThreadAudioUDPClient extends Thread{
 	SourceDataLine sourceDataLine;	
 	
 	private ThreadClient cliente;
+	
+	private boolean stop;
 
 	public ThreadAudioUDPClient(ThreadClient cliente) {
 		
 		this.cliente = cliente;
+		stop=false;
+	}
+	
+	public void setStop(boolean stop) {
+		this.stop=stop;
 	}
 	
 	public void run() {
@@ -52,7 +59,7 @@ public class ThreadAudioUDPClient extends Thread{
 		byte[] buffer = new byte[10000];
 		try {
 			int count;
-			while ((count = audioInputStream.read(buffer, 0, buffer.length)) != -1) {
+			while ((count = audioInputStream.read(buffer, 0, buffer.length)) != -1 && !stop) {
 				if (count > 0) {
 					sourceDataLine.write(buffer, 0, count);
 				}
@@ -67,7 +74,7 @@ public class ThreadAudioUDPClient extends Thread{
 			MulticastSocket socket = cliente.getDtSocket();
 			byte[] audioBuffer = new byte[10000];
 			// ...
-			while (true) {
+			while (!stop) {
 				DatagramPacket packet = new DatagramPacket(audioBuffer, audioBuffer.length);
 				socket.receive(packet);
 				// ...

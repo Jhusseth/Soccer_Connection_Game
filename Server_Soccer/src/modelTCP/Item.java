@@ -2,16 +2,18 @@ package modelTCP;
 
 import java.awt.Point;
 
+import javax.swing.ImageIcon;
+
 public class Item {
 	
 	public static final String IMAGE_PLAYER="";
 	private int id;
 	private Point pos;
-	private String image;
+	private ImageIcon image;
 	private String name;
 	
 	
-	public Item(int id, Point pos, String image,String name) {
+	public Item(int id, Point pos, ImageIcon image,String name) {
 		super();
 		this.id = id;
 		this.pos = pos;
@@ -36,10 +38,10 @@ public class Item {
 	public void setPos(Point pos) {
 		this.pos = pos;
 	}
-	public String getImage() {
+	public ImageIcon getImage() {
 		return image;
 	}
-	public void setImage(String image) {
+	public void setImage(ImageIcon image) {
 		this.image = image;
 	}
 	

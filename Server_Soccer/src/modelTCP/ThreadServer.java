@@ -34,6 +34,13 @@ public class ThreadServer extends Thread {
 					Match match = new Match();
 					match.addPlayer(tmp);
 					matches.add(match);
+//					new Timer().schedule(new TimerTask() {
+//						@Override
+//						public void run() {
+//							sendComercial();
+//							System.out.println("Se empieza el envio del audio comercial "+ true);
+//						}
+//					}, 10);
 				} else {
 					Match match = matches.get(matches.size() - 1);
 					int players = match.getPlayers();
@@ -43,8 +50,8 @@ public class ThreadServer extends Thread {
 						new Timer().schedule(new TimerTask() {
 							@Override
 							public void run() {
-								sendAudio();
-								System.out.println("Se empieza el envio del audioz"+true);
+								sendTema();
+								System.out.println("Se empieza el envio del audio tema "+ true);
 							}
 						}, 10);
 					} else if (players == 2) {
@@ -60,8 +67,13 @@ public class ThreadServer extends Thread {
 
 	}
 	
-	public void sendAudio() {
-		ThreadAudioUDPServer audio = new ThreadAudioUDPServer(MUlTICAST,PORT_AUDIO);
+	public void sendTema() {
+		ThreadAudioUDPServer audio = new ThreadAudioUDPServer(MUlTICAST,PORT_AUDIO,1);
+		audio.start();
+	}
+	
+	public void sendComercial() {
+		ThreadAudioUDPServer audio = new ThreadAudioUDPServer(MUlTICAST,PORT_AUDIO,2);
 		audio.start();
 	}
 	

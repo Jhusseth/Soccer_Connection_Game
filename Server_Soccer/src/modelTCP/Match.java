@@ -3,6 +3,8 @@ package modelTCP;
 import java.awt.Point;
 import java.net.Socket;
 
+import javax.swing.ImageIcon;
+
 public class Match {
 	public static final long DURATION=1*1000*60;
 	private Item balon;
@@ -10,23 +12,22 @@ public class Match {
 	private Player player2;
 	private long time;
 	private boolean start;
-	
-	private boolean goal;
 	private String report;
 
 	public Match() {
-		balon = new Item(0, new Point(427, 240), "Ball","");
-		report = "RESULTADOS \n \n";
+		balon = new Item(0, new Point(427, 240), new ImageIcon("data/ball.png"),"");
+		report = "";
+		start = false;
 	}
 
 	public boolean addPlayer(Socket so)throws Exception {
 
 		if (player1 == null) {
-			player1 = new Player(1,new Point(300, 185), "", so,this);
+			player1 = new Player(1,new Point(300, 185), new ImageIcon("data/player1.gif"), so,this);
 			new Thread(player1).start();
 			return true;
 		} else if (player2 == null) {
-			player2 = new Player(2,new Point(525, 185), "", so,this);
+			player2 = new Player(2,new Point(525, 185), new ImageIcon("data/player2.gif"), so,this);
 			new Thread(player2).start();
 			return true;
 		}
@@ -74,10 +75,41 @@ public class Match {
 		return time;
 	}
 
-	public void reporte(String rp) {
-		report += "Estadisticas del partido \n";
-		report+= rp + "\n \n";
+	public String reporte(int id) {
+		if(id==1) {
+			for(int i =0;i<=player1.getGoles().size();i++) {
+				if(player1.getGoles().size()==0) {		
+					report = player1.getName() + "     Gol n°: " + 0 + " " + "   Minuto  00:00" + "\n";	
+				}		
+				else {			
+					report = player1.getName() + "     Gol n°: " + i+1 + " " + "   Minuto 00:" +player1.getGoles().get(i).getTime() + "\n";			
+				}		
+			}
+		}
+		else {	
+			for(int i =0;i<=player2.getGoles().size();i++) {			
+				if(player2.getGoles().size()==0) {
+				report = player2.getName() + "     Gol n°: " + 0 + " " + "   Minuto  00:00" + "\n";			
+				}			
+				else {			
+					report = player2.getName() + "    Gol n°: " + i+1 + " " + "   Minuto 00:" +player2.getGoles().get(i).getTime() + "\n";			
+				}
+			}
+		}
+		return report;
 	}
-
-
+	
+	
+	public String winner() {
+		if(player1.getGoles().size()>player2.getGoles().size()) {
+			return player1.getName();
+		}
+		else if(player1.getGoles().size()<player2.getGoles().size()) {
+			
+			return  player2.getName();
+		}
+		else {
+			return "Empate";
+		}
+	}
 }

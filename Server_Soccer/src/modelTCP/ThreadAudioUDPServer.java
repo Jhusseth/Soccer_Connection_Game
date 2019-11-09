@@ -29,23 +29,28 @@ public class ThreadAudioUDPServer extends Thread {
 	    private long sleepTimeMillis;
 	    private int sleepTimeNanos, epsilon;
 
-	    public ThreadAudioUDPServer(String host, int port) {      
+	    public ThreadAudioUDPServer(String host, int port, int index) {      
 	        this.host=host;
 	        this.port=port;
-	        init();
+	        init(index);
 	    }
 
-	    public void init() {
-	        File file = new File("./data/test.wav");
+	    public void init(int index) {
+	        File file = new File("./data/tema.wav");
+	        File fileC = new File("./data/comercial.wav");
 	        try {
-	            audioInputStream=AudioSystem.getAudioInputStream(file);
+	        	if(index==1) {  
+	        		audioInputStream=AudioSystem.getAudioInputStream(file);
+	        	}
+	        	else {
+	        		audioInputStream=AudioSystem.getAudioInputStream(fileC);	
+	        	}
 
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
 	        
 	        audioFormat = audioInputStream.getFormat();
-	        //audioFormat = new AudioFormat(44100, 16, 2, true, false);
 	        DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 	        System.out.println(info);
 
@@ -62,7 +67,6 @@ public class ThreadAudioUDPServer extends Thread {
 	        try {
 	        	
 	            byte bytes[] =  new byte[4096];
-	            byte bytes2[] =  new byte[1024];
 	            int bytesRead=0;
 	            sleepTime=(1024/audioFormat.getSampleRate());
 	            epsilon=400000;
@@ -71,28 +75,21 @@ public class ThreadAudioUDPServer extends Thread {
 	            System.out.println("Sleep time :"+sleepTimeMillis+" ms, "+sleepTimeNanos+" ns");
 
 	            while ((bytesRead=audioInputStream.read(bytes, 0, bytes.length))!= -1) {
-	                //getSignalLevel(bytes);
 	            	
 	                try {                   
-	                 //   startTime=System.nanoTime();
 	                    packet = new DatagramPacket(bytes, bytes.length, InetAddress.getByName(host), port);
 	                    packet.setData(bytes);
 	                    server.send(packet);                    
 	                    packet.setLength(bytes.length);  
-	                    
-	                   // endTime=System.nanoTime();
-	                    //System.out.println(endTime-startTime);
 	                    Thread.sleep(sleepTimeMillis,sleepTimeNanos);                   
 	                } catch (IOException e) {
 	                    e.printStackTrace();
 	                }
-	            }   
-	            System.out.println("No bytes anymore !");                   
+	            }                      
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
 	        sLine.close();
-	        System.out.println("Line closed");
 
 	    }
 
