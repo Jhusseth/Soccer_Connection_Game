@@ -6,7 +6,7 @@ import java.net.Socket;
 import javax.swing.ImageIcon;
 
 public class Match {
-	public static final long DURATION=1*1000*60;
+	public static final int DURATION=40;
 	private Item balon;
 	private Player player1;
 	private Player player2;
@@ -76,23 +76,24 @@ public class Match {
 	}
 
 	public String reporte(int id) {
+		int g =0;
 		if(id==1) {
-			for(int i =0;i<=player1.getGoles().size();i++) {
-				if(player1.getGoles().size()==0) {		
-					report = player1.getName() + "     Gol n°: " + 0 + " " + "   Minuto  00:00" + "\n";	
-				}		
-				else {			
-					report = player1.getName() + "     Gol n°: " + i+1 + " " + "   Minuto 00:" +player1.getGoles().get(i).getTime() + "\n";			
-				}		
+			if(player1.getGoles().size()==0) {
+				report = player1.getName() + "     Gol n°: " + g + " " + "   Minuto  00:00" + "\n";	
+			}
+			else {
+				for(int i =0;i<player1.getGoles().size();i++) {
+					report = player1.getName() + "     Gol n°: " + g+1 + " " + "   Minuto 00:" +player1.getGoles().get(i).getTime() + "\n";	
+				}
 			}
 		}
 		else {	
-			for(int i =0;i<=player2.getGoles().size();i++) {			
-				if(player2.getGoles().size()==0) {
-				report = player2.getName() + "     Gol n°: " + 0 + " " + "   Minuto  00:00" + "\n";			
-				}			
-				else {			
-					report = player2.getName() + "    Gol n°: " + i+1 + " " + "   Minuto 00:" +player2.getGoles().get(i).getTime() + "\n";			
+			if(player2.getGoles().size()==0) {
+				report = player2.getName() + "     Gol n°: " + g + " " + "   Minuto  00:00" + "\n";	
+			}
+			else {
+				for(int i =0;i<player2.getGoles().size();i++) {
+					report = player2.getName() + "     Gol n°: " + g+1 + " " + "   Minuto 00:" +player2.getGoles().get(i).getTime() + "\n";	
 				}
 			}
 		}

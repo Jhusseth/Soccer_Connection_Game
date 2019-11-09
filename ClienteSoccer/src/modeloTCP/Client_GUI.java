@@ -51,6 +51,7 @@ public class Client_GUI extends JFrame implements KeyListener{
 		score1=0;
 		have1=false;
 		have2=false;
+		goal =false;
 		init();
 		field = new Field_Panel();
 		pr = new Panel_Report(this);
@@ -71,7 +72,6 @@ public class Client_GUI extends JFrame implements KeyListener{
 		pl1=new ImageIcon("data/player1.gif");
 		player = new Item(1, new Point(300, 185), name,pl1);
 		score2=0;
-		goal =false;
 		setVisible(true);
 		repaint();
 	}
@@ -168,8 +168,8 @@ public class Client_GUI extends JFrame implements KeyListener{
 		g.setColor(Color.BLACK);
 
 		g.drawString(time, (this.getWidth()/2)-36, 57);
-		g.drawString(score1+ "", 52, 57);
-		g.drawString(score2+ "", 792, 57);
+		g.drawString(score1 + "", 52, 57);
+		g.drawString(score2 + "", 792, 57);
 
 		g.drawImage(balon.getImage().getImage(),balon.getPos().x, balon.getPos().y,20,20, null);
 		
@@ -179,7 +179,7 @@ public class Client_GUI extends JFrame implements KeyListener{
 	public void catchBall(int id) {
 		System.out.println("catch");
 		if(id==player1.getId()) {
-			balon.setPos(new Point(player1.getPos().x-33,player1.getPos().y+53));
+			balon.setPos(new Point(player1.getPos().x-17,player1.getPos().y+53));
 		}
 		else if(id == player.getId()) {
 			balon.setPos(new Point(player.getPos().x+33,player.getPos().y+53));
@@ -188,13 +188,13 @@ public class Client_GUI extends JFrame implements KeyListener{
 	
 	
 	public String checkGoal() {
-		String goals ="";
+		String goals ="no gol";
 		if(balon.getPos().x==9) {
-			System.out.println("gol");
+			System.out.println("gol player2");
 			if(balon.getPos().y>190 && balon.getPos().y<315) {
 				score2++;
 				goal=true;
-				goals = player1.getId() +" "+ time;
+				goals = "" + player1.getName();
 				
 				player1 = new Item(2, new Point(525, 185), "Cliente 2",pl);
 				balon = new Item(0, new Point(427, 240), "Ball",bl);
@@ -203,11 +203,11 @@ public class Client_GUI extends JFrame implements KeyListener{
 		}
 
 		if(balon.getPos().x==829) {
-			System.out.println("gol");
+			System.out.println("gol player1");
 			if(balon.getPos().y>190 && balon.getPos().y<315) {
 				score1++;
 				goal=true;
-				goals = player.getId() +" "+ time;
+				goals = "" + player.getName();
 				
 				player1 = new Item(2, new Point(525, 185), "Cliente 2",pl);
 				balon = new Item(0, new Point(427, 240), "Ball",bl);
@@ -231,6 +231,10 @@ public class Client_GUI extends JFrame implements KeyListener{
 	}
 	public boolean getGoal() {
 		return goal;
+	}
+	
+	public void setGoal(boolean goal) {
+		this.goal=goal;
 	}
 
 	public int getScore1() {
@@ -262,7 +266,6 @@ public class Client_GUI extends JFrame implements KeyListener{
 				catchBall(2);
 			}
 		}
-		System.out.println(checkGoal());
 	}
 
 	public boolean getHave1() {

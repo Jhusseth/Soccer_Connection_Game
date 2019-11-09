@@ -72,6 +72,8 @@ public class Player extends Item implements Runnable{
 			writer.writeUTF("continue");
 			writer.writeUTF(""+resta);
 			
+			writer.writeUTF(match.getPlayer(getId()).getName());
+			
 			String player1[]=reader.readUTF().split(" ");
 
 			this.setPos(new Point(Integer.parseInt(player1[0]),Integer.parseInt(player1[1])));
@@ -93,23 +95,25 @@ public class Player extends Item implements Runnable{
 			resta=(int)((System.currentTimeMillis()-match.getTime())/1000);
 					
 			String gol = reader.readUTF();
+			System.out.println(gol);
 			
 			if(!gol.equals("no gol")) {
-				String[] goal = gol.split(" ");
-				int pg = Integer.parseInt(goal[0]);
-				if(pg==1) {
-					match.getPlayer(2).addGol(Integer.parseInt(goal[1]));
+				System.out.println("entro " + gol + " " + getId());
+				if(gol.equals(this.getName())) {
+					match.getPlayer(1).addGol(resta);
 				}
 				else {
-					match.getPlayer(1).addGol(Integer.parseInt(goal[1]));
+					match.getPlayer(2).addGol(resta);
 				}
 			}
 			
-			String score2 =""+ match.getPlayer(getId()).getGoles().size();
+			String score1 =""+ match.getPlayer(1).getGoles().size();
+			String score2 =""+ match.getPlayer(2).getGoles().size();
+			writer.writeUTF(score1);
 			writer.writeUTF(score2);
 			
 		}
-		while(resta<10);
+		while(resta<45);
 		System.out.println("se termino el juego envia end");
 		writer.writeUTF("end");
 		System.out.println("El tiempo cambia a 0");

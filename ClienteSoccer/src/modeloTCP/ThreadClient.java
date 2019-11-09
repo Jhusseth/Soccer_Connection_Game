@@ -70,6 +70,10 @@ public class ThreadClient extends Thread {
 			gui.setTime("00:"+ time);
 			
 			do {
+				
+				String name = reader.readUTF();
+				gui.setOtherName(name);
+				
 				Point pos=gui.getPlayer();
 				String msm=pos.x+" "+pos.y;
 				writer.writeUTF(msm);
@@ -92,11 +96,17 @@ public class ThreadClient extends Thread {
 				String gol = gui.checkGoal();
 				
 				if(gui.getGoal()) {
+					System.out.println("Envio el gol");
 					writer.writeUTF(gol);
+					System.out.println(gol);
+					gui.setGoal(false);
 				}
 				else {
 					writer.writeUTF("no gol");
 				}
+				
+				String score1 = reader.readUTF();
+				gui.setScore1(Integer.parseInt(score1));
 				
 				String score2 = reader.readUTF();
 				gui.setScore2(Integer.parseInt(score2));
