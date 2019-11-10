@@ -8,8 +8,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -57,7 +55,7 @@ public class Client_GUI extends JFrame implements KeyListener{
 		goal =false;
 		init();
 		field = new Field_Panel();
-		pr = new Panel_Report(this);
+		pr = new Panel_Report();
 		direc =2;
 		setLayout(new BorderLayout());
 		add(field, BorderLayout.CENTER);

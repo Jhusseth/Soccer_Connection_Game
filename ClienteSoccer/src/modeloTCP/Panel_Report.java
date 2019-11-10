@@ -2,15 +2,12 @@ package modeloTCP;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -30,14 +27,12 @@ public class Panel_Report extends JPanel implements ActionListener {
 	private JTextArea results;
 	private JButton btn_close;
 	private JButton btn_esta;
-	private Client_GUI gui;
 	
 	
 
-	public Panel_Report(Client_GUI gui) {
+	public Panel_Report() {
 		setBackground(Color.BLACK);
 		setSize(500,400);
-		this.gui = gui;
 		
 		results=new JTextArea("                 \n \n                       Resultados \n \n");
 		results.setColumns(20);
