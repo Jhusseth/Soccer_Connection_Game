@@ -30,9 +30,6 @@ public class Client_GUI extends JFrame implements KeyListener{
 	private Item balon;
 	private String time;
 	private boolean goal;
-	
-	public int score1;
-	public int score2;
 	private ImageIcon pl;
 	private ImageIcon pl1;
 	private ImageIcon bl;
@@ -40,7 +37,14 @@ public class Client_GUI extends JFrame implements KeyListener{
 	private boolean have1;
 	private boolean have2;
 	
+	private int score1;
+	private int score2;
+	
+	private int test;
+	
 	private Panel_Report pr;
+	
+	private int direc;
 
 	public Client_GUI() {
 		pl=new ImageIcon("data/player2.gif");
@@ -48,13 +52,13 @@ public class Client_GUI extends JFrame implements KeyListener{
 		time="00:00";
 		player1 = new Item(2, new Point(525, 185), "Cliente 2",pl);
 		balon = new Item(0, new Point(427, 240), "Ball",bl);
-		score1=0;
-		have1=false;
 		have2=false;
+		score2=0;
 		goal =false;
 		init();
 		field = new Field_Panel();
 		pr = new Panel_Report(this);
+		direc =2;
 		setLayout(new BorderLayout());
 		add(field, BorderLayout.CENTER);
 		setSize(860, 487);
@@ -64,14 +68,16 @@ public class Client_GUI extends JFrame implements KeyListener{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		new ThreadClient(this).start();
 		setResizable(false);
+		test =0;
 	}
 
 	public void init() {
 		name = JOptionPane.showInputDialog("Name of Cliente:");
 		setTitle(":: Cliente :: " + name + " ::");
+		score1=0;
+		have1=false;
 		pl1=new ImageIcon("data/player1.gif");
 		player = new Item(1, new Point(300, 185), name,pl1);
-		score2=0;
 		setVisible(true);
 		repaint();
 	}
@@ -90,7 +96,7 @@ public class Client_GUI extends JFrame implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent key) {
 		
-		Point point = getPlayer();
+		Point point = getPlayer().getPos();
 
 		if (key.getKeyCode() == 27) {
 			System.exit(0);
@@ -103,15 +109,21 @@ public class Client_GUI extends JFrame implements KeyListener{
 		}
 		if (key.getKeyCode() == 37) {
 			setPlayer(new Point(point.x-DX, point.y));
+			direc =1;
+			player.setImage(new ImageIcon("data/player1D.gif") );
 		}
 		if (key.getKeyCode() == 39) {
 			setPlayer(new Point(point.x+DX, point.y));
+			direc =2;
+			player.setImage(new ImageIcon("data/player1.gif"));
 
 		}
 		if (key.getKeyCode() == 32) {
+			setBalon(new Point(427, 240));
 		}
 
 		if (key.getKeyCode() == 82) {
+			player.setScore(test++);
 			repaint();
 		}
 		repaint();
@@ -119,16 +131,16 @@ public class Client_GUI extends JFrame implements KeyListener{
 		
 	}
 	
-	public Point getPlayer1() {
-		return player1.getPos();
+	public Item getPlayer1() {
+		return player1;
 	}
 
 	public void setPlayer1(Point point) {
 		this.player1.setPos(point);
 	}
 
-	public Point getPlayer() {
-		return player.getPos();
+	public Item getPlayer() {
+		return player;
 	}
 
 	public void setPlayer(Point point) {
@@ -153,6 +165,39 @@ public class Client_GUI extends JFrame implements KeyListener{
 		revalidate();
 	}
 	
+	public String checkGoal() {
+		String goals ="no gol";
+		if(balon.getPos().x<=9) {
+			System.out.println("gol player2");
+			if(balon.getPos().y>190 && balon.getPos().y<315) {
+				goal=true;
+				score2++;
+				player1.setScore(score2);
+				System.out.println(player1.getScore() + " ");
+				goals = "" + player1.getName();
+				player1.setPos(new Point(525, 185));
+				balon.setPos(new Point(427, 240));
+				player.setPos(new Point(300, 185));
+			}
+		}
+
+		if(balon.getPos().x>=829) {
+			System.out.println("gol player1");
+			if(balon.getPos().y>190 && balon.getPos().y<315) {
+				goal=true;
+				score1++;
+				player.setScore(score1);
+				System.out.println(player.getScore() + " ");
+				goals = "" + player.getName();
+				player1.setPos(new Point(525, 185));
+				balon.setPos(new Point(427, 240));
+				player.setPos(new Point(300, 185));
+			}
+		}
+		
+		return goals;
+	}
+	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -168,58 +213,36 @@ public class Client_GUI extends JFrame implements KeyListener{
 		g.setColor(Color.BLACK);
 
 		g.drawString(time, (this.getWidth()/2)-36, 57);
-		g.drawString(score1 + "", 52, 57);
-		g.drawString(score2 + "", 792, 57);
+		g.drawString(player.getScore() + "", 52, 57);
+		g.drawString(player1.getScore() + "", 792, 57);
 
 		g.drawImage(balon.getImage().getImage(),balon.getPos().x, balon.getPos().y,20,20, null);
 		
-		test();
+//		test();
 	}
 	
 	public void catchBall(int id) {
 		System.out.println("catch");
 		if(id==player1.getId()) {
-			balon.setPos(new Point(player1.getPos().x-17,player1.getPos().y+53));
+			if(player1.getImage().toString().equals("data/player2D.gif")) {
+				balon.setPos(new Point(player1.getPos().x+53,player1.getPos().y+53));
+			}
+			else {
+				balon.setPos(new Point(player1.getPos().x-12,player1.getPos().y+53));
+			}
 		}
 		else if(id == player.getId()) {
-			balon.setPos(new Point(player.getPos().x+33,player.getPos().y+53));
-		}
-	}
-	
-	
-	public String checkGoal() {
-		String goals ="no gol";
-		if(balon.getPos().x==9) {
-			System.out.println("gol player2");
-			if(balon.getPos().y>190 && balon.getPos().y<315) {
-				score2++;
-				goal=true;
-				goals = "" + player1.getName();
-				
-				player1 = new Item(2, new Point(525, 185), "Cliente 2",pl);
-				balon = new Item(0, new Point(427, 240), "Ball",bl);
-				player = new Item(1, new Point(300, 185), name,pl1);
+			if(player.getImage().toString().equals("data/player1D.gif")) {
+				balon.setPos(new Point(player.getPos().x-12,player.getPos().y+53));
 			}
-		}
-
-		if(balon.getPos().x==829) {
-			System.out.println("gol player1");
-			if(balon.getPos().y>190 && balon.getPos().y<315) {
-				score1++;
-				goal=true;
-				goals = "" + player.getName();
-				
-				player1 = new Item(2, new Point(525, 185), "Cliente 2",pl);
-				balon = new Item(0, new Point(427, 240), "Ball",bl);
-				player = new Item(1, new Point(300, 185), name,pl1);
+			else {
+				balon.setPos(new Point(player.getPos().x+40,player.getPos().y+53));
 			}
+			
 		}
-		
-		return goals;
 	}
 
 	public String getPlayerName() {
-		// TODO Auto-generated method stub
 		return player.getName();
 	}
 
@@ -236,36 +259,28 @@ public class Client_GUI extends JFrame implements KeyListener{
 	public void setGoal(boolean goal) {
 		this.goal=goal;
 	}
-
-	public int getScore1() {
-		return score1;
-	}
-
-	public void setScore1(int score1) {
-		this.score1 = score1;
-	}
-
-	public int getScore2() {
-		return score2;
-	}
-
-	public void setScore2(int score2) {
-		this.score2 = score2;
-	}
 	
 	public void test() {
 		if(balon.getPos().x-40 <= player.getPos().x && player.getPos().x<=balon.getPos().x+40) {			
-			if((balon.getPos().y-54<=player.getPos().y && player.getPos().y<=balon.getPos().y+54)) {	
+			if((balon.getPos().y-64<=player.getPos().y && player.getPos().y<=balon.getPos().y+30)) {	
 				have1=true;
 				catchBall(1);
 			}
 		}
-		if(balon.getPos().x-40 <= player1.getPos().x && player1.getPos().x<=balon.getPos().x+40) {			
-			if((balon.getPos().y-54<=player1.getPos().y && player1.getPos().y<=balon.getPos().y+54)) {	
+		if(balon.getPos().x-40 <= player1.getPos().x && player1.getPos().x<=balon.getPos().x+10) {			
+			if((balon.getPos().y-64<=player1.getPos().y && player1.getPos().y<=balon.getPos().y+10)) {	
 				have2=true;
 				catchBall(2);
 			}
 		}
+	}
+	
+	public int getDirec() {
+		return direc;
+	}
+
+	public void setDirec(int direc) {
+		this.direc = direc;
 	}
 
 	public boolean getHave1() {
@@ -277,7 +292,6 @@ public class Client_GUI extends JFrame implements KeyListener{
 		// TODO Auto-generated method stub
 		return have2;
 	}
-	
 	
 	public void resultsMatch(String results) {
 		remove(field);

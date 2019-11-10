@@ -10,6 +10,8 @@ import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.ImageIcon;
+
 
 public class ThreadClient extends Thread {
 	public static final int PORT = 5001;
@@ -22,6 +24,8 @@ public class ThreadClient extends Thread {
 	
 	private MulticastSocket dtSocket;
 	private ThreadAudioUDPClient audio;
+	
+	
 	
 	public MulticastSocket getDtSocket() {
 		return dtSocket;
@@ -63,6 +67,8 @@ public class ThreadClient extends Thread {
 			}
 //			audio.setStop(true);
 			
+			
+			
 			String otherName=state;
 			gui.setOtherName(otherName);
 			state=reader.readUTF();
@@ -71,15 +77,13 @@ public class ThreadClient extends Thread {
 			
 			do {
 				
-				String name = reader.readUTF();
-				gui.setOtherName(name);
+				gui.test();
 				
-				Point pos=gui.getPlayer();
+				Point pos=gui.getPlayer().getPos();
 				String msm=pos.x+" "+pos.y;
 				writer.writeUTF(msm);
 				String player1[]=reader.readUTF().split(" ");
 				gui.setPlayer1(new Point(Integer.parseInt(player1[0]), Integer.parseInt(player1[1])));
-				
 				//posision balon cambia
 				if(gui.getHave1()|| gui.getHave2()) {
 					 pos=gui.getBalon();
@@ -89,6 +93,12 @@ public class ThreadClient extends Thread {
 					writer.writeUTF("don't have");
 
 				}
+				
+				writer.writeUTF(""+gui.getDirec());
+				
+				String img = reader.readUTF();
+				
+				gui.getPlayer1().setImage(new ImageIcon(img));
 				
 				String balon[]=reader.readUTF().split(" ");
 				gui.setBalon(new Point(Integer.parseInt(balon[0]), Integer.parseInt(balon[1])));
@@ -105,11 +115,10 @@ public class ThreadClient extends Thread {
 					writer.writeUTF("no gol");
 				}
 				
-				String score1 = reader.readUTF();
-				gui.setScore1(Integer.parseInt(score1));
-				
 				String score2 = reader.readUTF();
-				gui.setScore2(Integer.parseInt(score2));
+				gui.getPlayer().setScore(Integer.parseInt(score2));
+//				String score1 = reader.readUTF();
+//				gui.getPlayer1().setScore(Integer.parseInt(score1));
 				
 				state=reader.readUTF();
 				time=reader.readUTF();
@@ -123,12 +132,12 @@ public class ThreadClient extends Thread {
 			gui.setSize(615,460);
 			
 			String rs1 = reader.readUTF(); 
-			gui.resultsMatch(rs1);
+			gui.resultsMatch("        "+rs1);
 			String rs2 = reader.readUTF();
-			gui.resultsMatch(rs2);
+			gui.resultsMatch("        " + rs2);
 			
 			String winner = reader.readUTF();
-			gui.resultsMatch( "                Ganador:   "+ winner);
+			gui.resultsMatch( "                  Ganador:   "+ winner);
 			
 			System.out.println("Empieza audio");
 			audio = new ThreadAudioUDPClient(this);			

@@ -12,11 +12,13 @@ public class Match {
 	private Player player2;
 	private long time;
 	private boolean start;
-	private String report;
+	private String report1;
+	private String report2;
 
 	public Match() {
 		balon = new Item(0, new Point(427, 240), new ImageIcon("data/ball.png"),"");
-		report = "";
+		report1 = " ";
+		report2 = " ";
 		start = false;
 	}
 
@@ -75,32 +77,47 @@ public class Match {
 		return time;
 	}
 
-	public String reporte(int id) {
+	public void reporte(int id) {
 		int g =0;
+		
 		if(id==1) {
 			if(player1.getGoles().size()==0) {
-				report = player1.getName() + "     Gol n°: " + g + " " + "   Minuto  00:00" + "\n";	
+				report1 = player1.getName() + "     Gol n°: " + g + " " + "   Minuto  00:00" + "\n";	
 			}
 			else {
-				for(int i =0;i<player1.getGoles().size();i++) {
-					report = player1.getName() + "     Gol n°: " + g+1 + " " + "   Minuto 00:" +player1.getGoles().get(i).getTime() + "\n";	
+				for(int i =0;i<(player1.getGoles().size())/2;i++) {
+					g = i+1;
+					report1 += player1.getName() + "     Gol n°: " + g + " " + "   Minuto 00:" +player1.getGoles().get(i).getTime() + "\n";	
 				}
 			}
 		}
 		else {	
 			if(player2.getGoles().size()==0) {
-				report = player2.getName() + "     Gol n°: " + g + " " + "   Minuto  00:00" + "\n";	
+				report2 = player2.getName() + "     Gol n°: " + g + " " + "   Minuto  00:00" + "\n";	
 			}
 			else {
-				for(int i =0;i<player2.getGoles().size();i++) {
-					report = player2.getName() + "     Gol n°: " + g+1 + " " + "   Minuto 00:" +player2.getGoles().get(i).getTime() + "\n";	
+				for(int i =0;i<(player2.getGoles().size())/2;i++) {
+					g=i+1;
+					report2 += player2.getName() + "     Gol n°: " + g + " " + "   Minuto 00:" +player2.getGoles().get(i).getTime() + "\n";	
 				}
 			}
 		}
-		return report;
 	}
 	
 	
+	public String getReport1() {
+		return report1;
+	}
+
+	public void setReport(String report) {
+		this.report1 = report;
+		this.report2 = report;
+	}
+
+	public String getReport2() {
+		return report2;
+	}
+
 	public String winner() {
 		if(player1.getGoles().size()>player2.getGoles().size()) {
 			return player1.getName();

@@ -72,8 +72,6 @@ public class Player extends Item implements Runnable{
 			writer.writeUTF("continue");
 			writer.writeUTF(""+resta);
 			
-			writer.writeUTF(match.getPlayer(getId()).getName());
-			
 			String player1[]=reader.readUTF().split(" ");
 
 			this.setPos(new Point(Integer.parseInt(player1[0]),Integer.parseInt(player1[1])));
@@ -89,6 +87,19 @@ public class Player extends Item implements Runnable{
 				String[] pars=line.split(" ");
 				match.setBalon(new Point(Integer.parseInt(pars[0]),Integer.parseInt(pars[1])));
 			}
+			
+			String direct = reader.readUTF();
+			
+			if(direct.equals("1")) {
+				this.setImage(new ImageIcon("data/player2.gif") );
+			}
+			else {
+				this.setImage(new ImageIcon("data/player2D.gif") );
+			}
+			
+			writer.writeUTF(match.getPlayer(getId()).getImage().toString());
+			
+			
 			Point balon=match.getBalon().getPos();
 			String balonP=balon.x+" "+balon.y;
 			writer.writeUTF(balonP);
@@ -106,21 +117,28 @@ public class Player extends Item implements Runnable{
 					match.getPlayer(2).addGol(resta);
 				}
 			}
-			
-			String score1 =""+ match.getPlayer(1).getGoles().size();
-			String score2 =""+ match.getPlayer(2).getGoles().size();
-			writer.writeUTF(score1);
+			int scorep2 = match.getPlayer(getId()).getGoles().size() /2;
+//			int scorep1 = match.getPlayer(1).getGoles().size() /2;
+			String score2 =""+ scorep2;
+//			String score1 =""+ scorep1;
 			writer.writeUTF(score2);
+//			writer.writeUTF(score1);
 			
 		}
-		while(resta<45);
+		while(resta<10);
 		System.out.println("se termino el juego envia end");
 		writer.writeUTF("end");
 		System.out.println("El tiempo cambia a 0");
 		writer.writeUTF("0");
 		System.out.println("se envia el reporte");
-		writer.writeUTF(match.reporte(1));
-		writer.writeUTF(match.reporte(2));
+		match.reporte(1);
+		writer.writeUTF(match.getReport1());
+		
+		match.setReport(" ");
+		
+		match.reporte(2);
+		writer.writeUTF(match.getReport2());
+		
 		writer.writeUTF(match.winner());
 		
 		} catch (Exception e) {

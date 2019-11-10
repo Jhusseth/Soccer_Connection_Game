@@ -6,19 +6,26 @@ import javax.swing.ImageIcon;
 
 public class Item {
 	
-	public static final String IMAGE_PLAYER="";
 	private int id;
 	private Point pos;
 	private ImageIcon image;
 	private String name;
+	private int score;
 	
 	
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
 	public Item(int id, Point pos, String name,ImageIcon im) {
 		super();
 		this.id = id;
 		this.pos = pos;
 		this.name=name;
 		image=im;
+		score=0;
 	}
 	public int getId() {
 		return id;
