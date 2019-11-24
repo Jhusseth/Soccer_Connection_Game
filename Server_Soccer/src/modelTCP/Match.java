@@ -6,7 +6,7 @@ import java.net.Socket;
 import javax.swing.ImageIcon;
 
 public class Match {
-	public static final int DURATION=40;
+	public static final int DURATION=60;
 	private Item balon;
 	private Player player1;
 	private Player player2;

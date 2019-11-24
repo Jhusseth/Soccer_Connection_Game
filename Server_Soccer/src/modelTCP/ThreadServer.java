@@ -79,5 +79,9 @@ public class ThreadServer extends Thread {
 	
 	public static void main(String[] args) {
 		new ThreadServer().start();
+		
+		HiloServidorWeb hiloServerWeb = new HiloServidorWeb();
+		Thread tre = new Thread(hiloServerWeb);
+		tre.start();
 	}
 }

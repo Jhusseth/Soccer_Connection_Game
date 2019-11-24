@@ -137,7 +137,7 @@ public class ThreadClient extends Thread {
 			gui.resultsMatch("        " + rs2);
 			
 			String winner = reader.readUTF();
-			gui.resultsMatch( "                  Ganador:   "+ winner);
+			gui.resultsMatch( "                Ganador:   "+ winner);
 			
 			System.out.println("Empieza audio");
 			audio = new ThreadAudioUDPClient(this);			

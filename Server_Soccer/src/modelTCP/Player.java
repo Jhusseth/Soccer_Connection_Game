@@ -125,7 +125,7 @@ public class Player extends Item implements Runnable{
 //			writer.writeUTF(score1);
 			
 		}
-		while(resta<10);
+		while(resta<match.DURATION);
 		System.out.println("se termino el juego envia end");
 		writer.writeUTF("end");
 		System.out.println("El tiempo cambia a 0");
