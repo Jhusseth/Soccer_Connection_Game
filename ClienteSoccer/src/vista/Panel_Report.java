@@ -1,4 +1,4 @@
-package modeloTCP;
+package vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

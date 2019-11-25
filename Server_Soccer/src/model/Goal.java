@@ -1,4 +1,4 @@
-package modelTCP;
+package model;
 
 public class Goal {
 	

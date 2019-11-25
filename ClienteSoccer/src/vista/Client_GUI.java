@@ -1,5 +1,5 @@
 
-package modeloTCP;
+package vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,6 +12,8 @@ import java.awt.event.KeyListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import handlerClient.ThreadClient;
 
 public class Client_GUI extends JFrame implements KeyListener{
 

@@ -1,4 +1,4 @@
-package modelTCP;
+package handlerServer;
 
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import handlerWeb.ThreadServerWeb;
+import model.Match;
+import modelUDP.ThreadAudioUDPServer;
 
 public class ThreadServer extends Thread {
 	public static final int PORT = 5001;
@@ -80,7 +84,7 @@ public class ThreadServer extends Thread {
 	public static void main(String[] args) {
 		new ThreadServer().start();
 		
-		HiloServidorWeb hiloServerWeb = new HiloServidorWeb();
+		ThreadServerWeb hiloServerWeb = new ThreadServerWeb();
 		Thread tre = new Thread(hiloServerWeb);
 		tre.start();
 	}

@@ -1,4 +1,4 @@
-package modeloTCP;
+package handlerClient;
 
 import java.awt.Point;
 import java.io.DataInputStream;
@@ -11,6 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
+
+import modelUDP.ThreadAudioUDPClient;
+import vista.Client_GUI;
 
 
 public class ThreadClient extends Thread {

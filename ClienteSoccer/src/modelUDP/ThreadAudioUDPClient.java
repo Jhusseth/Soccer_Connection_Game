@@ -1,4 +1,4 @@
-package modeloTCP;
+package modelUDP;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -12,6 +12,8 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
+
+import handlerClient.ThreadClient;
 
 
 public class ThreadAudioUDPClient extends Thread{

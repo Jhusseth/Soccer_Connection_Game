@@ -1,4 +1,4 @@
-package modelTCP;
+package modelUDP;
 
 import java.io.File;
 import java.io.IOException;

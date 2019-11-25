@@ -1,4 +1,4 @@
-package modelTCP;
+package model;
 
 import java.awt.Point;
 

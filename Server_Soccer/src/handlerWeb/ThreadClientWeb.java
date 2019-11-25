@@ -1,4 +1,4 @@
-package modelTCP;
+package handlerWeb;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -10,10 +10,12 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
-public class HiloClienteWeb implements Runnable{
+import handlerServer.ThreadServer;
+
+public class ThreadClientWeb implements Runnable{
 	private final Socket socket;
 
-	public HiloClienteWeb(Socket socket)
+	public ThreadClientWeb(Socket socket)
 	{
 		this.socket =  socket;
 	}
