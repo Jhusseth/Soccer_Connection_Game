@@ -84,4 +84,8 @@ public class ThreadServer extends Thread {
 		Thread tre = new Thread(hiloServerWeb);
 		tre.start();
 	}
+
+	public static List<Match> getMatches() {
+		return matches;
+	}
 }

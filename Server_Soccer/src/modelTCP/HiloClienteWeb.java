@@ -1,13 +1,13 @@
 package modelTCP;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 public class HiloClienteWeb implements Runnable{
@@ -44,42 +44,33 @@ public class HiloClienteWeb implements Runnable{
 					System.out.println(httpQueryString);
 					if(httpQueryString.equals("/"))
 					{
-						StringBuilder responseBuffer =  new StringBuilder();
+						//StringBuilder responseBuffer =  new StringBuilder();
 						String str="";
-						BufferedReader buf = new BufferedReader(new FileReader(System.getProperty("user.dir") +"/data/Login.html"));
+						BufferedReader buf = new BufferedReader(new FileReader("html/game.html"));
+						BufferedWriter buw = new BufferedWriter(new FileWriter("html/game2.html"));
 						while ((str = buf.readLine()) != null) {
-							responseBuffer.append(str);
-					    }
-						sendResponse(socket, 200, responseBuffer.toString());		
-					    buf.close();
-					}
-					
-					if(httpQueryString.contains("/?txtLogin="))
-					{
-						System.out.println("Get method processed segunda ");
-						
-						
-						String[] response =  httpQueryString.split("&");
-						String nombre= response[0].substring(11, response[0].length());
-						ArrayList<String> infoJugador= new ArrayList<String>();
-						System.out.println(nombre);
-						try {
-							File archivo = new File("./data/investigacion.txt");
-							FileReader fr = new FileReader(archivo);
-							BufferedReader sr = new BufferedReader(fr);
-
-							String mensaje = sr.readLine();
-
-							while (mensaje != null && !mensaje.isEmpty()) {
-								if(mensaje.split("&")[0].equals(nombre)) {
-									infoJugador.add(mensaje.split("&")[1]);
-								}
-								mensaje = sr.readLine();
+							buw.write(str + "\n");
+							if(str.contains("matchSTD")) {
+								buf.readLine();
+								buw.write("<center><h2> Cantidad de Partidos:"+ "   " + datos()[0] + "</h2> </center>" +
+										"<center><p> "+ datos()[1] + "</p> </center>" + "\n");
+								buf.readLine();
 							}
-							sr.close();
-						} catch (Exception e) {
-							e.printStackTrace();
+							
+							if(str.contains("dataGame")) {
+								buf.readLine();
+								buw.write(datos()[2]);
+								buf.readLine();
+								buw.write(datos()[3]);
+							}
+							//responseBuffer.append(str);
 						}
+						buf.close();
+						buw.close();
+						sendResponse(socket, 200, test().toString());		 
+					}
+					if(httpQueryString.contains("/?txtData="))
+					{
 						String retornoAppend="";
 						retornoAppend= "<html>" + 
 								"    <style>" + 
@@ -95,36 +86,20 @@ public class HiloClienteWeb implements Runnable{
 								"    </style>" + 
 								"    <head></head>" + 
 								"    <body>" + 
-								"        <center><h1>Cantidad de juegos: </h1> </center>" + 
-								"        <table class=\"tabla\">" + 
-								"            <tr>" + 
-								"                <th>Fecha</th>" + 
-								"                <th>Numero de Alimentos digeridos</th>" + 
-								"                <th>Score</th>" + 
-								"                <th>Gano?</th>" + 
-								"                <th>Tiempo transcurrido de juego</th>" + 
-								"            </tr>";
-						
-						System.out.println(infoJugador.size());
-						for (int i = 0; i < infoJugador.size(); i++) {
-							String[] split= infoJugador.get(i).split(" ");
-							String nuevo= "<tr>"+"<td>"+ split[0]+"</td>"+"<td>"+ split[1]+"</td>"+"<td>"+ split[2]+"</td>"+
-									"<td>"+ split[3]+"</td>"+"<td>"+ split[4]+"</td>"+"</tr>";
-							retornoAppend+=nuevo;
-						}				
+								"        <center><h1>Cantidad de Partidos:"+ "   " + datos()[0] + "</h1> </center>" + 
+								"        <center><h3>Jugadores Activos:</h3> </center>" + 
+								"          <center><p>"+ datos()[1] +"</p></center>";
 						retornoAppend+=
-								"        </table>" + 
+								"        </table>" +
 								"    </body>" + 
 								"</html>";
 
 						StringBuilder responseBuffer =  new StringBuilder();
-						responseBuffer
-						.append(retornoAppend);
+						responseBuffer.append(retornoAppend);
 						sendResponse(socket, 200, responseBuffer.toString());		
 					}
-				}
-				
-				else
+			}	
+			else
 				{
 					System.out.println("The HTTP method is not recognized");
 					sendResponse(socket, 405, "Method Not Allowed");
@@ -132,7 +107,7 @@ public class HiloClienteWeb implements Runnable{
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}			
 	}
 	
 	public void sendResponse(Socket socket, int statusCode, String responseString)
@@ -171,4 +146,86 @@ public class HiloClienteWeb implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public StringBuilder test() {
+		StringBuilder responseBuffer =  new StringBuilder();
+		try {
+			String str="";
+			BufferedReader buf = new BufferedReader(new FileReader("html/game2.html"));
+			while ((str = buf.readLine()) != null) {
+				responseBuffer.append(str);
+			}
+			buf.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return responseBuffer;
+	}
+	
+	public String csStyle() {
+		String data ="";
+		try {
+			String str="";
+			BufferedReader buf = new BufferedReader(new FileReader("css/stylesGame.css"));
+			while ((str = buf.readLine()) != null) {
+				data += str + "\n";
+			}
+			buf.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return data;
+	}
+	
+	public String[] datos() {
+		
+		String [] data = new String[4];
+		int match = ThreadServer.getMatches().size();
+		String players = "";
+		
+		String[] test = new String[match];
+		for(int i=0;i<match;i++) {
+			String p1 = "";
+			String p2 = "";
+			if(!ThreadServer.getMatches().get(i).getPlayer(2).getConexion()) {
+			    p1 =ThreadServer.getMatches().get(i).getPlayer(2).getName();
+			}
+            if(!ThreadServer.getMatches().get(i).getPlayer(1).getConexion()) {
+            	p2 =ThreadServer.getMatches().get(i).getPlayer(1).getName();
+			}
+            
+             test[i]="<br>" + p1 + "    vs   " +p2 + "</br>";
+		}
+		
+		for(int j=0;j<ThreadServer.getMatches().size();j++) {
+			if(!ThreadServer.getMatches().get(j).getEnd()==true) {
+            	players += test[j];
+            }
+			else {
+				match--;
+			}
+		}
+		
+		String results1 ="";
+		String results2 ="";
+		for(int k=0;k<ThreadServer.getMatches().size();k++) {
+			ThreadServer.getMatches().get(k).reporte(1);
+			results1+=ThreadServer.getMatches().get(k).getReport1();
+			ThreadServer.getMatches().get(k).setReport("");
+			ThreadServer.getMatches().get(k).reporte(2);
+			results2+=ThreadServer.getMatches().get(k).getReport2();
+		}
+		
+		String resultado1 = "<br> "+ results1+ " </br>" + "\n";
+		String resultado2 = "<br> "+ results2 +" </br>" + "\n";
+		
+		data[0]="" + match;
+		data[1]=players;
+		data[2]=resultado1;
+		data[3]=resultado2;
+		return data;
+	}
+	
 }

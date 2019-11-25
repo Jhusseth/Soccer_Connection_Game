@@ -21,6 +21,7 @@ public class Player extends Item implements Runnable{
 	private DataOutputStream writer;
 	private Match match;
 	private boolean hball;
+	public boolean desconectado;
 	
 	public boolean isHball() {
 		return hball;
@@ -37,6 +38,7 @@ public class Player extends Item implements Runnable{
 		goles=new ArrayList<>();
 		this.match=match;
 		hball = false;
+		desconectado=false;
 		
 	}
 	public void createStream(){
@@ -55,6 +57,14 @@ public class Player extends Item implements Runnable{
 	
 	public List<Goal> getGoles(){
 		return goles;
+	}
+	
+	public boolean getConexion() {
+		return desconectado;
+	}
+	
+	public void setConexion(boolean conexion) {
+		desconectado = conexion;
 	}
 
 	@Override
@@ -127,6 +137,8 @@ public class Player extends Item implements Runnable{
 		}
 		while(resta<match.DURATION);
 		System.out.println("se termino el juego envia end");
+		match.setEnd(true);
+		match.getPlayer(getId()).setConexion(true);
 		writer.writeUTF("end");
 		System.out.println("El tiempo cambia a 0");
 		writer.writeUTF("0");
@@ -144,6 +156,8 @@ public class Player extends Item implements Runnable{
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			match.setEnd(true);
+			match.getPlayer(getId()).setConexion(true);
 		}	
 	}
 }

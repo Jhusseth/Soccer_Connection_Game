@@ -14,12 +14,14 @@ public class Match {
 	private boolean start;
 	private String report1;
 	private String report2;
+	private boolean end;
 
 	public Match() {
 		balon = new Item(0, new Point(427, 240), new ImageIcon("data/ball.png"),"");
 		report1 = " ";
 		report2 = " ";
 		start = false;
+		end=false;
 	}
 
 	public boolean addPlayer(Socket so)throws Exception {
@@ -49,6 +51,14 @@ public class Match {
 		time=System.currentTimeMillis();
 		start=true;
 
+	}
+	
+	public boolean getEnd() {
+		return end;
+	}
+	
+	public void setEnd(boolean end) {
+		this.end=end;
 	}
 	
 	public synchronized boolean getStart() {
