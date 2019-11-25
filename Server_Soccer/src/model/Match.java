@@ -79,7 +79,6 @@ public class Match {
 
 		}else {
 			return player1;
-
 		}
 	}
 
@@ -92,23 +91,23 @@ public class Match {
 		
 		if(id==1) {
 			if(player1.getGoles().size()==0) {
-				report1 = player1.getName() + "     Gol n°: " + g + " " + "   Minuto  00:00" + "\n";	
+				report1 = "        " + player1.getName() + "     Gol n°: " + g + " " + "   Minuto  00:00" + "\n";	
 			}
 			else {
-				for(int i =0;i<(player1.getGoles().size())/2;i++) {
+				for(int i =0;i<player1.getGoles().size();i++) {
 					g = i+1;
-					report1 += player1.getName() + "     Gol n°: " + g + " " + "   Minuto 00:" +player1.getGoles().get(i).getTime() + "\n";	
+					report1 += "        " + player1.getName() + "     Gol n°: " + g + " " + "   Minuto 00:" +player1.getGoles().get(i).getTime() + "\n";	
 				}
 			}
 		}
 		else {	
 			if(player2.getGoles().size()==0) {
-				report2 = player2.getName() + "     Gol n°: " + g + " " + "   Minuto  00:00" + "\n";	
+				report2 = "        " + player2.getName() + "     Gol n°: " + g + " " + "   Minuto  00:00" + "\n";	
 			}
 			else {
-				for(int i =0;i<(player2.getGoles().size())/2;i++) {
+				for(int i =0;i<player2.getGoles().size();i++) {
 					g=i+1;
-					report2 += player2.getName() + "     Gol n°: " + g + " " + "   Minuto 00:" +player2.getGoles().get(i).getTime() + "\n";	
+					report2 += "        " + player2.getName() + "     Gol n°: " + g + " " + "   Minuto 00:" +player2.getGoles().get(i).getTime() + "\n";	
 				}
 			}
 		}

@@ -6,6 +6,10 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -50,7 +54,7 @@ public class Panel_Report extends JPanel implements ActionListener {
 		btn_close.addActionListener(this);
 		btn_close.setActionCommand(CLOSE);
 		
-		btn_esta = new JButton("  Html  ");
+		btn_esta = new JButton("Investigacion");
 		btn_esta.setForeground(Color.BLACK);
 		btn_esta.setBackground(Color.WHITE);
 		btn_esta.addActionListener(this);
@@ -87,11 +91,26 @@ public class Panel_Report extends JPanel implements ActionListener {
 		this.results.append(text + "\n");
 	}
 	
+	public void goToURL(String URL){
+        if (java.awt.Desktop.isDesktopSupported()) {
+         java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+
+         if (desktop.isSupported(java.awt.Desktop.Action.BROWSE)) {
+             try {
+                 java.net.URI uri = new java.net.URI(URL);
+                 desktop.browse(uri);
+             } catch (URISyntaxException | IOException ex) {
+                 Logger.getLogger(this.getName()).log(Level.SEVERE, null, ex);
+             }
+         }
+     }
+ }
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
 		if(e.getActionCommand().equals(ESTADISTCS)) {
-			JOptionPane.showMessageDialog(null, "Proximamente");
+			goToURL("http://hn1fqz7klkspxmzz83oics.webrelay.io/");
 		}
         if(e.getActionCommand().equals(CLOSE)) {
 			System.exit(0);

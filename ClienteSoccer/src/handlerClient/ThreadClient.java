@@ -80,19 +80,26 @@ public class ThreadClient extends Thread {
 			
 			do {
 				
-				gui.test();
+				gui.validateBallPosition();
 				
 				Point pos=gui.getPlayer().getPos();
-				String msm=pos.x+" "+pos.y;
+				int posX = gui.getWidth()-(pos.x+35);
+				String msm=posX+" "+pos.y;
 				writer.writeUTF(msm);
 				String player1[]=reader.readUTF().split(" ");
 				gui.setPlayer1(new Point(Integer.parseInt(player1[0]), Integer.parseInt(player1[1])));
 				//posision balon cambia
-				if(gui.getHave1()|| gui.getHave2()) {
+				if(gui.getHave1()) {
 					 pos=gui.getBalon();
-					 msm=pos.x+" "+pos.y;
-					writer.writeUTF(msm);
-				}else {
+					 msm=((gui.getWidth()-35)-pos.x)+" "+pos.y;
+					 writer.writeUTF(msm);
+				}
+				else if(gui.getHave2()) {
+					pos=gui.getBalon();
+					msm= pos.x +" "+pos.y;
+					writer.writeUTF(msm);	
+				}
+				else {
 					writer.writeUTF("don't have");
 
 				}
@@ -118,8 +125,8 @@ public class ThreadClient extends Thread {
 					writer.writeUTF("no gol");
 				}
 				
-				String score2 = reader.readUTF();
-				gui.getPlayer().setScore(Integer.parseInt(score2));
+//				String score2 = reader.readUTF();
+//				gui.getPlayer1().setScore(Integer.parseInt(score2));
 //				String score1 = reader.readUTF();
 //				gui.getPlayer1().setScore(Integer.parseInt(score1));
 				
@@ -135,9 +142,9 @@ public class ThreadClient extends Thread {
 			gui.setSize(615,460);
 			
 			String rs1 = reader.readUTF(); 
-			gui.resultsMatch("        "+rs1);
+			gui.resultsMatch(rs1);
 			String rs2 = reader.readUTF();
-			gui.resultsMatch("        " + rs2);
+			gui.resultsMatch(rs2);
 			
 			String winner = reader.readUTF();
 			gui.resultsMatch( "                Ganador:   "+ winner);
@@ -146,7 +153,6 @@ public class ThreadClient extends Thread {
 			audio = new ThreadAudioUDPClient(this);			
 			audio.start();
 			System.out.println("Termina audio");
-			//leeer reporte
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

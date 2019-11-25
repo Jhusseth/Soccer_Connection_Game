@@ -101,10 +101,10 @@ public class Player extends Item implements Runnable{
 			String direct = reader.readUTF();
 			
 			if(direct.equals("1")) {
-				this.setImage(new ImageIcon("data/player2.gif") );
+				this.setImage(new ImageIcon("data/player2D.gif") );
 			}
 			else {
-				this.setImage(new ImageIcon("data/player2D.gif") );
+				this.setImage(new ImageIcon("data/player2.gif") );
 			}
 			
 			writer.writeUTF(match.getPlayer(getId()).getImage().toString());
@@ -127,12 +127,12 @@ public class Player extends Item implements Runnable{
 					match.getPlayer(2).addGol(resta);
 				}
 			}
-			int scorep2 = match.getPlayer(getId()).getGoles().size() /2;
-//			int scorep1 = match.getPlayer(1).getGoles().size() /2;
-			String score2 =""+ scorep2;
-//			String score1 =""+ scorep1;
-			writer.writeUTF(score2);
-//			writer.writeUTF(score1);
+//			int scorep2 = match.getPlayer(1).getGoles().size();
+////			int scorep1 = match.getPlayer(1).getGoles().size() /2;
+//			String score2 =""+ scorep2;
+////			String score1 =""+ scorep1;
+//			writer.writeUTF(score2);
+////			writer.writeUTF(score1);
 			
 		}
 		while(resta<match.DURATION);

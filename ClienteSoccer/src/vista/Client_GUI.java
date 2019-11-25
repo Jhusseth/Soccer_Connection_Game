@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 
 import handlerClient.ThreadClient;
 
+
 public class Client_GUI extends JFrame implements KeyListener{
 
 	/**
@@ -213,30 +214,28 @@ public class Client_GUI extends JFrame implements KeyListener{
 		g.setColor(Color.BLACK);
 
 		g.drawString(time, (this.getWidth()/2)-36, 57);
-		g.drawString(player.getScore() + "", 52, 57);
-		g.drawString(player1.getScore() + "", 792, 57);
+		g.drawString(score1 + "", 52, 57);
+		g.drawString(score2 + "", 792, 57);
 
 		g.drawImage(balon.getImage().getImage(),balon.getPos().x, balon.getPos().y,20,20, null);
-		
-//		test();
 	}
 	
 	public void catchBall(int id) {
 		System.out.println("catch");
 		if(id==player1.getId()) {
 			if(player1.getImage().toString().equals("data/player2D.gif")) {
-				balon.setPos(new Point(player1.getPos().x+53,player1.getPos().y+53));
+				balon.setPos(new Point(player1.getPos().x,player1.getPos().y+53));
 			}
 			else {
-				balon.setPos(new Point(player1.getPos().x-12,player1.getPos().y+53));
+				balon.setPos(new Point(player1.getPos().x,player1.getPos().y+53));
 			}
 		}
 		else if(id == player.getId()) {
 			if(player.getImage().toString().equals("data/player1D.gif")) {
-				balon.setPos(new Point(player.getPos().x-12,player.getPos().y+53));
+				balon.setPos(new Point(player.getPos().x,player.getPos().y+53));
 			}
 			else {
-				balon.setPos(new Point(player.getPos().x+40,player.getPos().y+53));
+				balon.setPos(new Point(player.getPos().x,player.getPos().y+53));
 			}
 			
 		}
@@ -260,7 +259,7 @@ public class Client_GUI extends JFrame implements KeyListener{
 		this.goal=goal;
 	}
 	
-	public void test() {
+	public void validateBallPosition() {
 		if(balon.getPos().x-40 <= player.getPos().x && player.getPos().x<=balon.getPos().x+40) {			
 			if((balon.getPos().y-64<=player.getPos().y && player.getPos().y<=balon.getPos().y+30)) {	
 				have1=true;
