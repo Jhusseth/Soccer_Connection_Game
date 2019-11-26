@@ -8,6 +8,10 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -41,11 +45,12 @@ public class Client_GUI extends JFrame implements KeyListener{
 	private int score1;
 	private int score2;
 	
-	private int test;
-	
 	private Panel_Report pr;
 	
 	private int direc;
+	
+	private String rp1;
+	private String rp2;
 
 	public Client_GUI() {
 		pl=new ImageIcon("data/player2.gif");
@@ -69,7 +74,9 @@ public class Client_GUI extends JFrame implements KeyListener{
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		new ThreadClient(this).start();
 		setResizable(false);
-		test =0;
+		
+		rp1 = "";
+		rp2 = "";
 	}
 
 	public void init() {
@@ -120,11 +127,10 @@ public class Client_GUI extends JFrame implements KeyListener{
 
 		}
 		if (key.getKeyCode() == 32) {
-			setBalon(new Point(427, 240));
+			
 		}
 
 		if (key.getKeyCode() == 82) {
-			player.setScore(test++);
 			repaint();
 		}
 		repaint();
@@ -166,37 +172,35 @@ public class Client_GUI extends JFrame implements KeyListener{
 		revalidate();
 	}
 	
-	public String checkGoal() {
-		String goals ="no gol";
-		if(balon.getPos().x<=9) {
+	public void checkGoal() {	
+		if(balon.getPos().x<=18 && have2) {
 			System.out.println("gol player2");
 			if(balon.getPos().y>190 && balon.getPos().y<315) {
 				goal=true;
 				score2++;
 				player1.setScore(score2);
 				System.out.println(player1.getScore() + " ");
-				goals = "" + player1.getName();
+				rp2 +="      Minuto: "+ time + "  Jugador: " + player1.getName() + "  Gol" + "\n";
 				player1.setPos(new Point(525, 185));
 				balon.setPos(new Point(427, 240));
 				player.setPos(new Point(300, 185));
+				setHave();
 			}
 		}
-
-		if(balon.getPos().x>=829) {
+		if(balon.getPos().x>=829 && have1) {
 			System.out.println("gol player1");
 			if(balon.getPos().y>190 && balon.getPos().y<315) {
 				goal=true;
 				score1++;
 				player.setScore(score1);
 				System.out.println(player.getScore() + " ");
-				goals = "" + player.getName();
+				rp1 += "      Minuto: "+ time + "   Jugador: " + player.getName() + "  Gol"+ "\n";
 				player1.setPos(new Point(525, 185));
 				balon.setPos(new Point(427, 240));
 				player.setPos(new Point(300, 185));
+				setHave();
 			}
 		}
-		
-		return goals;
 	}
 	
 	@Override
@@ -218,26 +222,38 @@ public class Client_GUI extends JFrame implements KeyListener{
 		g.drawString(score2 + "", 792, 57);
 
 		g.drawImage(balon.getImage().getImage(),balon.getPos().x, balon.getPos().y,20,20, null);
+		
+		limites();
+		validateBallPosition();
 	}
 	
-	public void catchBall(int id) {
-		System.out.println("catch");
-		if(id==player1.getId()) {
-			if(player1.getImage().toString().equals("data/player2D.gif")) {
-				balon.setPos(new Point(player1.getPos().x,player1.getPos().y+53));
-			}
-			else {
-				balon.setPos(new Point(player1.getPos().x,player1.getPos().y+53));
+	public void limites() {
+		if(getBalon().x<5) {
+			if(!(balon.getPos().y>190 && balon.getPos().y<315)) {
+				setBalon(new Point(this.getWidth()+20,balon.getPos().y));
 			}
 		}
-		else if(id == player.getId()) {
-			if(player.getImage().toString().equals("data/player1D.gif")) {
-				balon.setPos(new Point(player.getPos().x,player.getPos().y+53));
+		if(getBalon().x>832) {         
+			if(!(balon.getPos().y>190 && balon.getPos().y<315)) {
+				setBalon(new Point(this.getWidth()-50,balon.getPos().y));
 			}
-			else {
-				balon.setPos(new Point(player.getPos().x,player.getPos().y+53));
-			}
-			
+		}
+		
+		if(player.getPos().y-20<2) {
+			setPlayer(new Point(player.getPos().x,34));
+		}
+		
+		
+		if(player.getPos().y+65>479) {
+			setPlayer(new Point(player.getPos().x,this.getHeight()-75));
+		}
+		
+		if(player.getPos().x+5<5) {
+			setPlayer(new Point(10,player.getPos().y));
+		}
+		
+		if(player.getPos().x+15>832){
+			setPlayer(new Point(this.getWidth()-50,player.getPos().y));
 		}
 	}
 
@@ -259,17 +275,20 @@ public class Client_GUI extends JFrame implements KeyListener{
 		this.goal=goal;
 	}
 	
+	public void setHave() {
+		this.have1=false;
+		this.have2=false;
+	}
+	
 	public void validateBallPosition() {
-		if(balon.getPos().x-40 <= player.getPos().x && player.getPos().x<=balon.getPos().x+40) {			
-			if((balon.getPos().y-64<=player.getPos().y && player.getPos().y<=balon.getPos().y+30)) {	
+		if(balon.getPos().x-11 <= player.getPos().x && player.getPos().x<=balon.getPos().x+45) {			
+			if((balon.getPos().y-64<=player.getPos().y && player.getPos().y<=balon.getPos().y+10)) {	
 				have1=true;
-				catchBall(1);
 			}
 		}
-		if(balon.getPos().x-40 <= player1.getPos().x && player1.getPos().x<=balon.getPos().x+10) {			
+		if(balon.getPos().x-11 <= player1.getPos().x && player1.getPos().x<=balon.getPos().x+41) {			
 			if((balon.getPos().y-64<=player1.getPos().y && player1.getPos().y<=balon.getPos().y+10)) {	
 				have2=true;
-				catchBall(2);
 			}
 		}
 	}
@@ -292,12 +311,48 @@ public class Client_GUI extends JFrame implements KeyListener{
 		return have2;
 	}
 	
-	public void resultsMatch(String results) {
+	public void resultsMatch() {
 		remove(field);
 		player.setPos(new Point(0,0));
+		player.setImage(new ImageIcon());
 		player1.setPos(new Point(0,0));
+		player1.setImage(new ImageIcon());
+		balon.setPos(new Point(0,0));
+		balon.setImage(new ImageIcon());
 		this.add(pr,BorderLayout.CENTER);
-		pr.setResults(results);
+		pr.setResults(registro());
 		repaint();
+	}
+	
+	public String registro() {
+		String msg ="";
+		
+		msg += "                               " + player.getName() + "\n";
+		msg += rp1;
+		if(rp1==" ") {
+			msg+="\n";
+		}
+		msg += "                 --Total:  " + score1 + "   Goles--\n \n";
+		
+		msg += "                               " + player1.getName() + "\n";
+		msg += rp2;
+		if(rp2==" ") {
+			msg+="\n";
+		}
+		msg += "                 --Total:  " + score2 + "   Goles--\n \n";
+		
+		
+		if(score1==score2) {
+			msg += "                               EMPATE";
+		}
+		else if(score1>score2) {
+			msg += "                       "+ player.getName() + "   WINNER";
+		}
+		
+		else {
+			msg += "                       "+ player1.getName() + "   WINNER";
+		}
+		
+		return msg;
 	}
 }

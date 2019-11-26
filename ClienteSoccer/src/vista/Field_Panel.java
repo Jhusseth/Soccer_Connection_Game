@@ -12,7 +12,7 @@ public class Field_Panel extends JPanel{
 	private static final long serialVersionUID = 1L;
 	
 	public Field_Panel() {
-		setSize(860,487);
+		setSize(850,455);
 	}
 	
 	@Override

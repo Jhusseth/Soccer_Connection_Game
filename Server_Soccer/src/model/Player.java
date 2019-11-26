@@ -15,7 +15,6 @@ import javax.swing.ImageIcon;
 
 public class Player extends Item implements Runnable{
 	
-	private List<Goal> goles;
 	private Socket playerSocket;
 	private DataInputStream reader;
 	private DataOutputStream writer;
@@ -35,7 +34,6 @@ public class Player extends Item implements Runnable{
 		createStream();
 		String name=reader.readUTF();
 		this.setName(name);
-		goles=new ArrayList<>();
 		this.match=match;
 		hball = false;
 		desconectado=false;
@@ -50,14 +48,6 @@ public class Player extends Item implements Runnable{
             Logger.getLogger(Player.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-	
-	public void addGol(int time) {
-		goles.add(new Goal(time));
-	}
-	
-	public List<Goal> getGoles(){
-		return goles;
-	}
 	
 	public boolean getConexion() {
 		return desconectado;
@@ -93,10 +83,8 @@ public class Player extends Item implements Runnable{
 			writer.writeUTF(pos);
 			//posision balon cambia
 			String line=reader.readUTF();
-			if(!line.equals("don't have")) {
-				String[] pars=line.split(" ");
-				match.setBalon(new Point(Integer.parseInt(pars[0]),Integer.parseInt(pars[1])));
-			}
+			String[] pars=line.split(" ");
+			match.setBalon(new Point(Integer.parseInt(pars[0]),Integer.parseInt(pars[1])));
 			
 			String direct = reader.readUTF();
 			
@@ -113,29 +101,9 @@ public class Player extends Item implements Runnable{
 			Point balon=match.getBalon().getPos();
 			String balonP=balon.x+" "+balon.y;
 			writer.writeUTF(balonP);
-			resta=(int)((System.currentTimeMillis()-match.getTime())/1000);
-					
-			String gol = reader.readUTF();
-			System.out.println(gol);
-			
-			if(!gol.equals("no gol")) {
-				System.out.println("entro " + gol + " " + getId());
-				if(gol.equals(this.getName())) {
-					match.getPlayer(1).addGol(resta);
-				}
-				else {
-					match.getPlayer(2).addGol(resta);
-				}
-			}
-//			int scorep2 = match.getPlayer(1).getGoles().size();
-////			int scorep1 = match.getPlayer(1).getGoles().size() /2;
-//			String score2 =""+ scorep2;
-////			String score1 =""+ scorep1;
-//			writer.writeUTF(score2);
-////			writer.writeUTF(score1);
-			
+			resta=(int)((System.currentTimeMillis()-match.getTime())/1000);		
 		}
-		while(resta<match.DURATION);
+		while(resta<30);
 		System.out.println("se termino el juego envia end");
 		match.setEnd(true);
 		match.getPlayer(getId()).setConexion(true);
@@ -143,15 +111,9 @@ public class Player extends Item implements Runnable{
 		System.out.println("El tiempo cambia a 0");
 		writer.writeUTF("0");
 		System.out.println("se envia el reporte");
-		match.reporte(1);
-		writer.writeUTF(match.getReport1());
 		
-		match.setReport(" ");
-		
-		match.reporte(2);
-		writer.writeUTF(match.getReport2());
-		
-		writer.writeUTF(match.winner());
+		String rg = reader.readUTF();
+		match.reporte(rg);
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

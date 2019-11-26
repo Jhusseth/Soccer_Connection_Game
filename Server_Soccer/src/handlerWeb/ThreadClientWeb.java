@@ -46,7 +46,6 @@ public class ThreadClientWeb implements Runnable{
 					System.out.println(httpQueryString);
 					if(httpQueryString.equals("/"))
 					{
-						//StringBuilder responseBuffer =  new StringBuilder();
 						String str="";
 						BufferedReader buf = new BufferedReader(new FileReader("html/game.html"));
 						BufferedWriter buw = new BufferedWriter(new FileWriter("html/game2.html"));
@@ -62,10 +61,7 @@ public class ThreadClientWeb implements Runnable{
 							if(str.contains("dataGame")) {
 								buf.readLine();
 								buw.write(datos()[2]);
-								buf.readLine();
-								buw.write(datos()[3]);
 							}
-							//responseBuffer.append(str);
 						}
 						buf.close();
 						buw.close();
@@ -183,7 +179,7 @@ public class ThreadClientWeb implements Runnable{
 	
 	public String[] datos() {
 		
-		String [] data = new String[4];
+		String [] data = new String[3];
 		int match = ThreadServer.getMatches().size();
 		String players = "";
 		
@@ -210,23 +206,16 @@ public class ThreadClientWeb implements Runnable{
 			}
 		}
 		
-		String results1 ="";
-		String results2 ="";
+		String results ="";
 		for(int k=0;k<ThreadServer.getMatches().size();k++) {
-			ThreadServer.getMatches().get(k).reporte(1);
-			results1+=ThreadServer.getMatches().get(k).getReport1();
-			ThreadServer.getMatches().get(k).setReport("");
-			ThreadServer.getMatches().get(k).reporte(2);
-			results2+=ThreadServer.getMatches().get(k).getReport2();
+			results += ThreadServer.getMatches().get(k).getRegister();
 		}
 		
-		String resultado1 = "<br> "+ results1+ " </br>" + "\n";
-		String resultado2 = "<br> "+ results2 +" </br>" + "\n";
+		String resultado = "<br> "+ results+ " </br>" + "\n";
 		
 		data[0]="" + match;
 		data[1]=players;
-		data[2]=resultado1;
-		data[3]=resultado2;
+		data[2]=resultado;
 		return data;
 	}
 	

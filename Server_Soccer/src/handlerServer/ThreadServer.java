@@ -37,13 +37,6 @@ public class ThreadServer extends Thread {
 					Match match = new Match();
 					match.addPlayer(tmp);
 					matches.add(match);
-//					new Timer().schedule(new TimerTask() {
-//						@Override
-//						public void run() {
-//							sendComercial();
-//							System.out.println("Se empieza el envio del audio comercial "+ true);
-//						}
-//					}, 10);
 				} else {
 					Match match = matches.get(matches.size() - 1);
 					int players = match.getPlayers();

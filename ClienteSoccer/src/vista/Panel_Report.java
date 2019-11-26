@@ -54,7 +54,7 @@ public class Panel_Report extends JPanel implements ActionListener {
 		btn_close.addActionListener(this);
 		btn_close.setActionCommand(CLOSE);
 		
-		btn_esta = new JButton("Investigacion");
+		btn_esta = new JButton("  Web  ");
 		btn_esta.setForeground(Color.BLACK);
 		btn_esta.setBackground(Color.WHITE);
 		btn_esta.addActionListener(this);
@@ -88,7 +88,7 @@ public class Panel_Report extends JPanel implements ActionListener {
 	}
 	
 	public void setResults(String text) {
-		this.results.append(text + "\n");
+		this.results.append(text +"\n");
 	}
 	
 	public void goToURL(String URL){

@@ -63,12 +63,9 @@ public class ThreadClient extends Thread {
 		try {
 			writer.writeUTF(gui.getPlayerName());
 			String state=reader.readUTF();
-//			audio = new ThreadAudioUDPClient(this);
 			while(state.equals("waiting")) {
-//				audio.start();
 				state=reader.readUTF();
 			}
-//			audio.setStop(true);
 			
 			
 			
@@ -80,29 +77,53 @@ public class ThreadClient extends Thread {
 			
 			do {
 				
-				gui.validateBallPosition();
 				
 				Point pos=gui.getPlayer().getPos();
-				int posX = gui.getWidth()-(pos.x+35);
+				int posX = (gui.getWidth()-51)-pos.x;
 				String msm=posX+" "+pos.y;
 				writer.writeUTF(msm);
 				String player1[]=reader.readUTF().split(" ");
 				gui.setPlayer1(new Point(Integer.parseInt(player1[0]), Integer.parseInt(player1[1])));
-				//posision balon cambia
+				
+				//posision balon se envia
 				if(gui.getHave1()) {
-					 pos=gui.getBalon();
-					 msm=((gui.getWidth()-35)-pos.x)+" "+pos.y;
-					 writer.writeUTF(msm);
+					pos=gui.getPlayer().getPos();
+					int pX=0;
+
+					if(gui.getPlayer().getImage().toString().equals("data/player1D.gif")) {
+						pX = pos.x-10;
+					}
+					else {
+						pX = pos.x+40;
+					}
+					int pY = pos.y+55;
+					msm=pX+" "+pY;
+					writer.writeUTF(msm);
+					
 				}
 				else if(gui.getHave2()) {
-					pos=gui.getBalon();
-					msm= pos.x +" "+pos.y;
-					writer.writeUTF(msm);	
+				    pos=gui.getPlayer1().getPos();
+				    
+				    int pX =0;
+				    if(gui.getPlayer1().getImage().toString().equals("data/player2D.gif")) {
+				    	pX = pos.x+40;
+					}
+				    else {	    	  
+				    	pX = pos.x-10;
+				    }
+				    int pY = pos.y+55;
+				   
+					msm=pX+" "+pY;
+					writer.writeUTF(msm);
+					
+					
 				}
 				else {
-					writer.writeUTF("don't have");
-
+					pos=gui.getBalon();
+					msm=pos.x+" "+pos.y;
+					writer.writeUTF(msm);
 				}
+				
 				
 				writer.writeUTF(""+gui.getDirec());
 				
@@ -113,22 +134,7 @@ public class ThreadClient extends Thread {
 				String balon[]=reader.readUTF().split(" ");
 				gui.setBalon(new Point(Integer.parseInt(balon[0]), Integer.parseInt(balon[1])));
 				
-				String gol = gui.checkGoal();
-				
-				if(gui.getGoal()) {
-					System.out.println("Envio el gol");
-					writer.writeUTF(gol);
-					System.out.println(gol);
-					gui.setGoal(false);
-				}
-				else {
-					writer.writeUTF("no gol");
-				}
-				
-//				String score2 = reader.readUTF();
-//				gui.getPlayer1().setScore(Integer.parseInt(score2));
-//				String score1 = reader.readUTF();
-//				gui.getPlayer1().setScore(Integer.parseInt(score1));
+			    gui.checkGoal();
 				
 				state=reader.readUTF();
 				time=reader.readUTF();
@@ -141,13 +147,10 @@ public class ThreadClient extends Thread {
 			gui.setTime("00:"+ "0"+time);
 			gui.setSize(615,460);
 			
-			String rs1 = reader.readUTF(); 
-			gui.resultsMatch(rs1);
-			String rs2 = reader.readUTF();
-			gui.resultsMatch(rs2);
+			String envReg = gui.registro();
+			writer.writeUTF(envReg);
+			gui.resultsMatch();
 			
-			String winner = reader.readUTF();
-			gui.resultsMatch( "                Ganador:   "+ winner);
 			
 			System.out.println("Empieza audio");
 			audio = new ThreadAudioUDPClient(this);			
