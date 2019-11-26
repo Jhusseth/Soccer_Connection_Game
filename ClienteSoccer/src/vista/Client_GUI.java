@@ -323,34 +323,36 @@ public class Client_GUI extends JFrame implements KeyListener{
 	}
 	
 	public String registro() {
-		String msg ="";
+		String msg1 ="";
+		String msg2 ="";
+		String msg3 ="";
 		
-		msg += "                               " + player.getName() + "\n";
-		msg += rp1;
+		msg1 += "                               " + player.getName() + "\n";
+		msg1 += rp1;
 		if(rp1==" ") {
-			msg+="\n";
+			msg1+="\n";
 		}
-		msg += "                 --Total:  " + score1 + "   Goles--\n \n";
+		msg1 += "                 --Total:  " + score1 + "   Goles--\n \n";
 		
-		msg += "                               " + player1.getName() + "\n";
-		msg += rp2;
+		msg2 += "                               " + player1.getName() + "\n";
+		msg2 += rp2;
 		if(rp2==" ") {
-			msg+="\n";
+			msg2+="\n";
 		}
-		msg += "                 --Total:  " + score2 + "   Goles--\n \n";
+		msg2 += "                 --Total:  " + score2 + "   Goles--\n \n";
 		
 		
 		if(score1==score2) {
-			msg += "                               EMPATE";
+			msg3 += "                               EMPATE";
 		}
 		else if(score1>score2) {
-			msg += "                       "+ player.getName() + "   WINNER";
+			msg1 += "                       "+ player.getName() + "   WINNER";
 		}
 		
 		else {
-			msg += "                       "+ player1.getName() + "   WINNER";
+			msg2 += "                       "+ player1.getName() + "   WINNER";
 		}
 		
-		return msg;
+		return msg1 + " " + msg2 + " " + msg3;
 	}
 }

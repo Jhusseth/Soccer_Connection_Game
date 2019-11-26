@@ -47,13 +47,15 @@ public class ThreadClientWeb implements Runnable{
 					if(httpQueryString.equals("/"))
 					{
 						String str="";
-						BufferedReader buf = new BufferedReader(new FileReader("html/game.html"));
-						BufferedWriter buw = new BufferedWriter(new FileWriter("html/game2.html"));
+						BufferedReader buf = new BufferedReader(new FileReader("html/Server_Soccer/html/game.html"));
+						BufferedWriter buw = new BufferedWriter(new FileWriter("html/Server_Soccer/html/index.html"));
+						String line = (buf.readLine());
+						buw.write(line + "\n"+ buf.readLine() +"\n"+csStyle());
 						while ((str = buf.readLine()) != null) {
 							buw.write(str + "\n");
 							if(str.contains("matchSTD")) {
 								buf.readLine();
-								buw.write("<center><h2> Cantidad de Partidos:"+ "   " + datos()[0] + "</h2> </center>" +
+								buw.write("<center><h2> Juegos Activos:"+ "   " + datos()[0] + "</h2> </center>" +
 										"<center><p> "+ datos()[1] + "</p> </center>" + "\n");
 								buf.readLine();
 							}
@@ -67,35 +69,35 @@ public class ThreadClientWeb implements Runnable{
 						buw.close();
 						sendResponse(socket, 200, test().toString());		 
 					}
-					if(httpQueryString.contains("/?txtData="))
-					{
-						String retornoAppend="";
-						retornoAppend= "<html>" + 
-								"    <style>" + 
-								"        .tabla{" + 
-								"            text-align: center;" + 
-								"            border: 2px solid black;" + 
-								"            margin-left: 30%;" + 
-								"            margin-right: 30%;" + 
-								"            padding: 5px;" + 
-								"            border-spacing: 15px 5px;" + 
-								"        }" + 
-								"" + 
-								"    </style>" + 
-								"    <head></head>" + 
-								"    <body>" + 
-								"        <center><h1>Cantidad de Partidos:"+ "   " + datos()[0] + "</h1> </center>" + 
-								"        <center><h3>Jugadores Activos:</h3> </center>" + 
-								"          <center><p>"+ datos()[1] +"</p></center>";
-						retornoAppend+=
-								"        </table>" +
-								"    </body>" + 
-								"</html>";
-
-						StringBuilder responseBuffer =  new StringBuilder();
-						responseBuffer.append(retornoAppend);
-						sendResponse(socket, 200, responseBuffer.toString());		
-					}
+//					if(httpQueryString.contains("/?txtData="))
+//					{
+//						String retornoAppend="";
+//						retornoAppend= "<html>" + 
+//								"    <style>" + 
+//								"        .tabla{" + 
+//								"            text-align: center;" + 
+//								"            border: 2px solid black;" + 
+//								"            margin-left: 30%;" + 
+//								"            margin-right: 30%;" + 
+//								"            padding: 5px;" + 
+//								"            border-spacing: 15px 5px;" + 
+//								"        }" + 
+//								"" + 
+//								"    </style>" + 
+//								"    <head></head>" + 
+//								"    <body>" + 
+//								"        <center><h1>Cantidad de Partidos:"+ "   " + datos()[0] + "</h1> </center>" + 
+//								"        <center><h3>Jugadores Activos:</h3> </center>" + 
+//								"          <center><p>"+ datos()[1] +"</p></center>";
+//						retornoAppend+=
+//								"        </table>" +
+//								"    </body>" + 
+//								"</html>";
+//
+//						StringBuilder responseBuffer =  new StringBuilder();
+//						responseBuffer.append(retornoAppend);
+//						sendResponse(socket, 200, responseBuffer.toString());		
+//					}
 			}	
 			else
 				{
@@ -150,7 +152,7 @@ public class ThreadClientWeb implements Runnable{
 		StringBuilder responseBuffer =  new StringBuilder();
 		try {
 			String str="";
-			BufferedReader buf = new BufferedReader(new FileReader("html/game2.html"));
+			BufferedReader buf = new BufferedReader(new FileReader("html/Server_Soccer/html/index.html"));
 			while ((str = buf.readLine()) != null) {
 				responseBuffer.append(str);
 			}
@@ -165,7 +167,7 @@ public class ThreadClientWeb implements Runnable{
 		String data ="";
 		try {
 			String str="";
-			BufferedReader buf = new BufferedReader(new FileReader("css/stylesGame.css"));
+			BufferedReader buf = new BufferedReader(new FileReader("html/Server_Soccer/html/css/stylesGame.css"));
 			while ((str = buf.readLine()) != null) {
 				data += str + "\n";
 			}
@@ -174,7 +176,7 @@ public class ThreadClientWeb implements Runnable{
 			e.printStackTrace();
 		}
 		
-		return data;
+		return "<style>" + "\n" +data + "</style>" + "\n";
 	}
 	
 	public String[] datos() {
@@ -208,7 +210,7 @@ public class ThreadClientWeb implements Runnable{
 		
 		String results ="";
 		for(int k=0;k<ThreadServer.getMatches().size();k++) {
-			results += ThreadServer.getMatches().get(k).getRegister();
+			results += ThreadServer.getMatches().get(k).getRegister() + "\n";
 		}
 		
 		String resultado = "<br> "+ results+ " </br>" + "\n";

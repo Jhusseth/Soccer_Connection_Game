@@ -90,7 +90,5 @@ public class ThreadAudioUDPServer extends Thread {
 	            e.printStackTrace();
 	        }
 	        sLine.close();
-
 	    }
-
 	}
