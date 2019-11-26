@@ -18,7 +18,7 @@ public class Field_Panel extends JPanel{
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);	
-		ImageIcon mg = new ImageIcon("data/Field.png");
+		ImageIcon mg = new ImageIcon("data/field.png");
 		g.drawImage(mg.getImage(),0,0,this.getWidth(),this.getHeight(), this);
 	}
 }
