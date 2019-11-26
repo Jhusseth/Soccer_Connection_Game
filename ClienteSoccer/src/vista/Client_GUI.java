@@ -134,8 +134,6 @@ public class Client_GUI extends JFrame implements KeyListener{
 			repaint();
 		}
 		repaint();
-		
-		
 	}
 	
 	public Item getPlayer1() {
