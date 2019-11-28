@@ -147,9 +147,12 @@ public class ThreadClient extends Thread {
 			gui.setTime("00:"+ "0"+time);
 			gui.setSize(615,460);
 			
-			String envReg = gui.registro();
-			writer.writeUTF(envReg);
-			gui.resultsMatch();
+			String[] envReg = gui.registroHTML();
+			String[] envReg2 = gui.registro();
+			String rg = envReg[0]+"\n"+envReg[1]+"\n"+envReg[2];
+			String rst = envReg2[0]+envReg2[1]+envReg2[2];
+			writer.writeUTF(rg);
+			gui.resultsMatch(rst);
 			
 			
 			System.out.println("Empieza audio");

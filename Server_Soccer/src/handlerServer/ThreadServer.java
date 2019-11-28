@@ -18,7 +18,7 @@ public class ThreadServer extends Thread {
 	public static final int PORT_AUDIO = 9999;
 	public static final String MUlTICAST = "224.0.0.1";
 
-	public ThreadServer() {
+    public ThreadServer() {
 		try {
 			socket = new ServerSocket(PORT);		
 		} catch (Exception e) {

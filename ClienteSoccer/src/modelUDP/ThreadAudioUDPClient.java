@@ -58,7 +58,7 @@ public class ThreadAudioUDPClient extends Thread{
 	}
 
 	private void playAudio() {
-		byte[] buffer = new byte[10000];
+		byte[] buffer = new byte[2048];
 		try {
 			int count;
 			while ((count = audioInputStream.read(buffer, 0, buffer.length)) != -1 && !stop) {

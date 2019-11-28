@@ -51,6 +51,9 @@ public class Client_GUI extends JFrame implements KeyListener{
 	
 	private String rp1;
 	private String rp2;
+	
+	private String rp1H;
+	private String rp2H;
 
 	public Client_GUI() {
 		pl=new ImageIcon("data/player2.gif");
@@ -77,6 +80,8 @@ public class Client_GUI extends JFrame implements KeyListener{
 		
 		rp1 = "";
 		rp2 = "";
+		rp1H = "";
+		rp2H = "";
 	}
 
 	public void init() {
@@ -179,6 +184,7 @@ public class Client_GUI extends JFrame implements KeyListener{
 				player1.setScore(score2);
 				System.out.println(player1.getScore() + " ");
 				rp2 +="      Minuto: "+ time + "  Jugador: " + player1.getName() + "  Gol" + "\n";
+				rp2H +="<br>Minuto: "+ time + "  Jugador: " + player1.getName() + "  Gol" + "\n";
 				player1.setPos(new Point(525, 185));
 				balon.setPos(new Point(427, 240));
 				player.setPos(new Point(300, 185));
@@ -193,6 +199,7 @@ public class Client_GUI extends JFrame implements KeyListener{
 				player.setScore(score1);
 				System.out.println(player.getScore() + " ");
 				rp1 += "      Minuto: "+ time + "   Jugador: " + player.getName() + "  Gol"+ "\n";
+				rp1H +="<br>Minuto: "+ time + "  Jugador: " + player1.getName() + "  Gol" + "\n";
 				player1.setPos(new Point(525, 185));
 				balon.setPos(new Point(427, 240));
 				player.setPos(new Point(300, 185));
@@ -309,7 +316,7 @@ public class Client_GUI extends JFrame implements KeyListener{
 		return have2;
 	}
 	
-	public void resultsMatch() {
+	public void resultsMatch(String r) {
 		remove(field);
 		player.setPos(new Point(0,0));
 		player.setImage(new ImageIcon());
@@ -318,41 +325,83 @@ public class Client_GUI extends JFrame implements KeyListener{
 		balon.setPos(new Point(0,0));
 		balon.setImage(new ImageIcon());
 		this.add(pr,BorderLayout.CENTER);
-		pr.setResults(registro());
+		pr.setResults(r);
 		repaint();
 	}
 	
-	public String registro() {
+	public String[] registro() {
 		String msg1 ="";
 		String msg2 ="";
 		String msg3 ="";
+		
+		String[] rst = new String[3];
 		
 		msg1 += "                               " + player.getName() + "\n";
 		msg1 += rp1;
 		if(rp1==" ") {
 			msg1+="\n";
 		}
-		msg1 += "                 --Total:  " + score1 + "   Goles--\n \n";
+		msg1 += "              -----Total:  " + score1 + "   Goles-----\n \n";
 		
 		msg2 += "                               " + player1.getName() + "\n";
 		msg2 += rp2;
 		if(rp2==" ") {
 			msg2+="\n";
 		}
-		msg2 += "                 --Total:  " + score2 + "   Goles--\n \n";
+		msg2 += "              -----Total:  " + score2 + "   Goles-----\n \n";
 		
 		
 		if(score1==score2) {
-			msg3 += "                               EMPATE";
+			msg3 += "                         EMPATE \n";
 		}
 		else if(score1>score2) {
-			msg1 += "                       "+ player.getName() + "   WINNER";
+			msg3 += "                       "+ player.getName() + "   WINNER \n";
 		}
 		
 		else {
-			msg2 += "                       "+ player1.getName() + "   WINNER";
+			msg3 += "                       "+ player1.getName() + "   WINNER \n";
 		}
 		
-		return msg1 + " " + msg2 + " " + msg3;
+		rst[0] = msg1;
+		rst[1] = msg2;
+		rst[2] = msg3;
+		
+		return rst;
+	}
+	
+	public String[] registroHTML() {
+		String msg1 ="";
+		String msg2 ="";
+		String msg3 ="";
+		
+		String[] rst = new String[3];
+		
+		msg1 += "<br>"+player.getName();
+		msg1 += rp1H;
+		
+		msg1 += "<br>--Total:  " + score1 + "   Goles--\n \n";
+		
+		msg2 += "<br>"+ player1.getName() + "\n";
+		msg2 +=rp2H;
+		
+		msg2 += "<br>--Total:  " + score2 + "   Goles--\n \n";
+		
+		
+		if(score1==score2) {
+			msg3 +="<br><br>EMPATE </br> \n";
+		}
+		else if(score1>score2) {
+			msg3 +="<br><br>" + player.getName() + "   WINNER </br> \n";
+		}
+		
+		else {
+			msg3 +="<br><br>" + player1.getName() + "   WINNER </br> \n";
+		}
+		
+		rst[0] = msg1;
+		rst[1] = msg2;
+		rst[2] = msg3;
+		
+		return rst;
 	}
 }

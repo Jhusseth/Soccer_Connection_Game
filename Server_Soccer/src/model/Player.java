@@ -103,7 +103,7 @@ public class Player extends Item implements Runnable{
 			writer.writeUTF(balonP);
 			resta=(int)((System.currentTimeMillis()-match.getTime())/1000);		
 		}
-		while(resta<30);
+		while(resta<match.DURATION);
 		System.out.println("se termino el juego envia end");
 		match.setEnd(true);
 		match.getPlayer(getId()).setConexion(true);
