@@ -5,11 +5,11 @@ import java.net.Socket;
 
 import javax.swing.ImageIcon;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import io.micrometer.core.annotation.Timed;
 
-@Component
+@Controller
 public class Match {
 	public static final int DURATION=60;
 	private Item balon;
@@ -97,7 +97,7 @@ public class Match {
 		this.register=rg;
 	}
 	
-	@Timed
+	
 	public String getRegister() {
 		return this.register;
 	}

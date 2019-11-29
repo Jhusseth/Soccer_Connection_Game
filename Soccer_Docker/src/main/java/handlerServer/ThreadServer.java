@@ -8,6 +8,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import io.micrometer.core.annotation.Timed;
 import model.Match;
@@ -88,7 +90,6 @@ public class ThreadServer extends Thread {
 //		Thread tre = new Thread(hiloServerWeb);
 //		tre.start();
 //	}
-
 	public static List<Match> getMatches() {
 		return matches;
 	}
