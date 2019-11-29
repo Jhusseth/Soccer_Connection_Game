@@ -1,0 +1,28 @@
+server:
+  port: 8080
+
+#TODO: figure out why I need this here and in bootstrap.yml
+spring:
+  application:
+    name: testLatticeApp
+
+ribbon:
+  ServerListRefreshInterval: 1000
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: metrics
+  metrics:
+    enable:
+      jvm: true
+      root: true
+      tomcat: true
+      
+    
+ 
+     
+     
+ 
+  

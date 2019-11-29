@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 
-
 public class Player extends Item implements Runnable{
 	
 	private Socket playerSocket;

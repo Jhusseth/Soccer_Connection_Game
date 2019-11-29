@@ -6,7 +6,6 @@ import javax.swing.ImageIcon;
 
 public class Item {
 	
-	public static final String IMAGE_PLAYER="";
 	private int id;
 	private Point pos;
 	private ImageIcon image;
