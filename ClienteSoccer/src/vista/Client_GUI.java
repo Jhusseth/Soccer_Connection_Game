@@ -76,7 +76,7 @@ public class Client_GUI extends JFrame implements KeyListener{
 		addKeyListener(this);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		new ThreadClient(this).start();
-		setResizable(false);
+		setResizable(true);
 		
 		rp1 = "";
 		rp2 = "";
@@ -286,12 +286,12 @@ public class Client_GUI extends JFrame implements KeyListener{
 	}
 	
 	public void validateBallPosition() {
-		if(balon.getPos().x-11 <= player.getPos().x && player.getPos().x<=balon.getPos().x+45) {			
+		if(balon.getPos().x-11 <= player.getPos().x && player.getPos().x<=balon.getPos().x+41) {			
 			if((balon.getPos().y-64<=player.getPos().y && player.getPos().y<=balon.getPos().y+10)) {	
 				have1=true;
 			}
 		}
-		if(balon.getPos().x-11 <= player1.getPos().x && player1.getPos().x<=balon.getPos().x+41) {			
+		if(balon.getPos().x-11 <= player1.getPos().x && player1.getPos().x<=balon.getPos().x) {			
 			if((balon.getPos().y-64<=player1.getPos().y && player1.getPos().y<=balon.getPos().y+10)) {	
 				have2=true;
 			}

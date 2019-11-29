@@ -13,12 +13,27 @@ management:
   endpoints:
     web:
       exposure:
-        include: metrics
+        include: '*'
+        
+  endpoint:
+    env:
+      enabled: true
+      
+    health:
+      enabled: true
+      
+    info:
+      enabled: true
+      
+    prometheus:
+      enabled: true
   metrics:
-    enable:
-      jvm: true
-      root: true
-      tomcat: true
+    export:
+      appoptics:
+        connect-timeout: 100
+    
+    
+    
       
     
  
