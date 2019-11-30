@@ -1,0 +1,149 @@
+html{
+	background-image: url("https://previews.123rf.com/images/vska/vska1512/vska151200134/49807189-fondo-abstracto-de-la-tecnolog%C3%ADa-interfaz-futurista-ilustraci%C3%B3n-del-vector-con-muchos-forma-geom%C3%A9trica-.jpg");
+}
+
+.principal{
+	width: 100%;
+	max-width: 900px;
+	height: auto; overflow: hidden;
+	border: 1px solid #000;
+	margin: auto;
+}
+
+header{
+	width: auto;
+	height: 100px;
+	border: 0px solid #000;
+	padding: 0px 15px 0px 15px;
+	float: center;
+	margin: auto;
+}
+
+#logo{
+	width: 200px;
+	height: 100px;
+	border: 0px solid #000;
+	float: left; font-family: sans-serif;
+}
+
+.titulo{
+	margin-top: 25px;
+	font-size: 30px;
+}
+
+.sub-titulo{
+	font-size: 14px;
+	margin-top: -20px;
+}
+
+.menu{
+	width: 260px;
+	height: 40px;
+	border: 0px solid #ccc;
+	float: right;
+	margin-top: 40px;
+}
+
+.menu ul{}
+
+.menu ul li{
+	list-style: none;
+	float: right;
+}
+
+.menu ul li a{
+	text-decoration: none;
+	padding: 5px 15px 5px 15px;
+	border: 1px solid #ccc;
+	color: #fff;
+	background: #006699;
+}
+
+.menu ul li a:hover{
+	background: #fff;
+	color: #006699;
+	transition: background 1s, color 1s;
+}
+
+#slide{
+	margin-top: -5px;
+	width: 867px;
+	height: 250px;
+	padding: 0px 15px 0px 15px;
+}
+
+#categorias{
+	width: 900px;
+	height: auto; overflow: hidden;
+	border: 0px solid;
+	margin-top: 15px;
+	float: center;
+}
+
+.uno{
+	width: auto;
+	height: auto; overflow: hidden;
+	border: 0px solid #ccc;
+	float: center;
+	padding: 5px;
+	text-align: center;
+	color: #5E59B8
+}
+
+.parrafo{
+	color: #000000;
+	text-align: center;
+	padding: 0px 15px 40px 15px;
+}
+
+.leer-mas{
+	text-decoration: none;
+	background: #006699;
+	color: #fff;
+	border: 1px solid #006699;
+	padding: 10px 20px 10px 20px;
+	margin-bottom: 10px;
+}
+
+.leer-mas:hover{
+	background: #fff;
+	color: #006699;
+	transition: background 1s, color 1s;
+}
+
+#izq{
+	width: 400px;
+	height: auto; overflow: hidden;
+	border: 0px solid #ccc;
+	float: left;
+	padding: 5px; color: #4682b4;
+}
+h3{
+	margin-left: 110px;
+	margin-top:50px;
+	font-size: 22px;
+}
+
+#der{
+	width: 400px;
+	height: auto; overflow: hidden;
+	border: 0px solid #ccc;
+	float: right;
+	padding: 5px; color: #4682b4;
+}
+
+footer{
+	text-align: center;
+	margin-top: 100px;
+	color: #000000;
+}
+
+#datos{
+	margin-top: 30px;
+}
+
+@media (max-width: 480px) {
+    #principal{    
+    	width: 400px;
+    }
+}
